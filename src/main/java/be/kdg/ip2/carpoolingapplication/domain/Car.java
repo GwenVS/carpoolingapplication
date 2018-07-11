@@ -6,7 +6,6 @@ import javax.persistence.*;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "car_id")
     private Long carId;
 
     @Column(length = 50)
@@ -19,7 +18,7 @@ public class Car {
     private int maxAmountPassengers;
 
     @ManyToOne(targetEntity = Carpooler.class,fetch = FetchType.EAGER)
-    @JoinColumn(name="carpooler_id")
+    @JoinColumn(name="carpoolerId")
     private Carpooler carpooler;
 
 

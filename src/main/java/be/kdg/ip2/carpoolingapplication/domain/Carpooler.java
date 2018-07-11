@@ -11,7 +11,6 @@ import java.util.List;
 public class Carpooler {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "carpooler_id")
     private long carpoolerId;
 
     @Column(length = 50, nullable = false)
