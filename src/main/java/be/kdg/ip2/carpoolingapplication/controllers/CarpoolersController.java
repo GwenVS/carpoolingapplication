@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 @RequestMapping("/api/carpoolers")
 public class CarpoolersController {
 

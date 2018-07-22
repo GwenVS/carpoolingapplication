@@ -1,8 +1,11 @@
 package be.kdg.ip2.carpoolingapplication.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table()
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
