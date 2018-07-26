@@ -23,8 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .configure(http)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/carpoolers").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/carpoolers").hasAuthority("view:registrations")
-                .antMatchers(HttpMethod.GET, "/api/carpoolers/**").hasAuthority("view:registration")
+                .antMatchers(HttpMethod.GET, "/api/carpoolers").hasAuthority("view:carpoolers")
+                .antMatchers(HttpMethod.GET, "/api/carpoolers/**").permitAll()
                 .anyRequest().authenticated();
     }
 

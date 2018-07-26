@@ -20,10 +20,7 @@ public class Carpooler {
     private String lastName;
 
     @Column(length = 50, nullable = false)
-    private String userName;//todo:emailadres: checken op @?
-
-    //@Column(nullable = false)
-    //private String encryptedPassword;
+    private String username;//todo:emailadres: checken op @?
 
     @Column()
     private boolean isSmoker;
@@ -62,28 +59,20 @@ public class Carpooler {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    /*public String getEncryptedPassword() {
-        return encryptedPassword;
-    }
-
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
-    }*/
-
-    public boolean isSmoker() {
+    public boolean getIsSmoker() {
         return isSmoker;
     }
 
-    public void setSmoker(boolean smoker) {
-        this.isSmoker = smoker;
+    public void setIsSmoker(boolean isSmoker) {
+        this.isSmoker = isSmoker;
     }
 
     public Gender getGender() {
