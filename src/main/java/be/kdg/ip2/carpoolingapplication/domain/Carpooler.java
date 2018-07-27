@@ -1,14 +1,16 @@
 package be.kdg.ip2.carpoolingapplication.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Fetch;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Carpooler {
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@carpoolerId")
+public class Carpooler implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long carpoolerId;
@@ -32,6 +34,20 @@ public class Carpooler {
     @OneToMany(mappedBy = "carpooler",targetEntity = Car.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Car> cars = new ArrayList<>();
+
+
+    //constructors
+    public Carpooler() {
+    }
+
+    public Carpooler(String firstName, String lastName, String username, boolean isSmoker, Gender gender, List<Car> cars) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.isSmoker = isSmoker;
+        this.gender = gender;
+        this.cars = cars;
+    }
 
 
     //getters and setters
@@ -89,5 +105,9 @@ public class Carpooler {
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    public void addCar(Car car) {
+        this.cars.add(car);
     }
 }

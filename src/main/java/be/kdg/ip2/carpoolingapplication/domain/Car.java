@@ -1,12 +1,16 @@
 package be.kdg.ip2.carpoolingapplication.domain;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Car {
+@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@carId")
+public class Car implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long carId;
@@ -23,6 +27,18 @@ public class Car {
     @ManyToOne(targetEntity = Carpooler.class,fetch = FetchType.EAGER)
     @JoinColumn(name="carpoolerId")
     private Carpooler carpooler;
+
+
+    //constructors
+    public Car() {
+    }
+
+    public Car(String type, double consumption, int maxAmountPassengers, Carpooler carpooler) {
+        this.type = type;
+        this.consumption = consumption;
+        this.maxAmountPassengers = maxAmountPassengers;
+        this.carpooler = carpooler;
+    }
 
 
     //getters and setters

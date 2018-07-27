@@ -30,4 +30,5 @@ dependencies {
     compile group: 'com.auth0', name: 'auth0-spring-security-api', version: '1.0.0'
 	runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.1'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
 }
