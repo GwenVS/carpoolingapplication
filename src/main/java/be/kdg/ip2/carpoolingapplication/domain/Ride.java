@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,18 +20,19 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long rideId;
 
-    @Column(nullable = false)
+    @Column()
     private Location departureLocation;
 
-    @Column(nullable = false)
+    @Column()
     private Location arrivalLocation;
 
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd@HH:mm:ss")
-    private Date departureTimeOutwardJourney;
+    private LocalDateTime departureTimeOutwardJourney;
 
+    @Column()
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd@HH:mm:ss")
-    private Date departureTimeReturnTrip;
+    private LocalDateTime departureTimeReturnTrip;
 
     @Column(nullable = false)
     private int AmountOfPassengers;
@@ -52,14 +53,14 @@ public class Ride {
     @Column
     @OneToMany(mappedBy = "ride",targetEntity = RideRequest.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<RideRequest> rideRequests;
+    private List<RideRequest> rideRequests = new ArrayList<>();
 
 
     //constructors
     public Ride() {
     }
 
-    public Ride(Location departureLocation, Location arrivalLocation, Date departureTimeOutwardJourney, Date departureTimeReturnTrip, int amountOfPassengers, RideType rideType, List<Location> passagepoints, List<CarpoolerRideInfo> carpoolerRideInfos, List<RideRequest> rideRequests) {
+    public Ride(Location departureLocation, Location arrivalLocation, LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, int amountOfPassengers, RideType rideType, List<Location> passagepoints, List<CarpoolerRideInfo> carpoolerRideInfos, List<RideRequest> rideRequests) {
         this.departureLocation = departureLocation;
         this.arrivalLocation = arrivalLocation;
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
@@ -97,19 +98,19 @@ public class Ride {
         this.arrivalLocation = arrivalLocation;
     }
 
-    public Date getDepartureTimeOutwardJourney() {
+    public LocalDateTime getDepartureTimeOutwardJourney() {
         return departureTimeOutwardJourney;
     }
 
-    public void setDepartureTimeOutwardJourney(Date departureTimeOutwardJourney) {
+    public void setDepartureTimeOutwardJourney(LocalDateTime departureTimeOutwardJourney) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
     }
 
-    public Date getDepartureTimeReturnTrip() {
+    public LocalDateTime getDepartureTimeReturnTrip() {
         return departureTimeReturnTrip;
     }
 
-    public void setDepartureTimeReturnTrip(Date departureTimeReturnTrip) {
+    public void setDepartureTimeReturnTrip(LocalDateTime departureTimeReturnTrip) {
         this.departureTimeReturnTrip = departureTimeReturnTrip;
     }
 

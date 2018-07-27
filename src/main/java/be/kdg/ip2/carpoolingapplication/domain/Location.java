@@ -17,10 +17,10 @@ public class Location {
     private Long locationId;
 
     @Column()
-    private double longitude;
+    private double latitude;
 
     @Column()
-    private double latitude;
+    private double longitude;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
     @JoinColumn(name="rideId")
@@ -31,9 +31,9 @@ public class Location {
     public Location() {
     }
 
-    public Location(double longitude, double latitude, Ride ride) {
-        this.longitude = longitude;
+    public Location(double latitude, double longitude, Ride ride) {
         this.latitude = latitude;
+        this.longitude = longitude;
         this.ride = ride;
     }
 
@@ -55,19 +55,19 @@ public class Location {
         this.ride = ride;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public double getLatitude() {
         return latitude;
     }
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
