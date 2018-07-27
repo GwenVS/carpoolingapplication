@@ -21,7 +21,7 @@ public class Carpooler implements Serializable {
     @Column(length = 50, nullable = false)
     private String lastName;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String username;//todo:emailadres: checken op @?
 
     @Column()
@@ -35,20 +35,24 @@ public class Carpooler implements Serializable {
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Car> cars = new ArrayList<>();
 
+    @Column
+    @OneToMany(mappedBy = "carpooler",targetEntity = CarpoolerRideInfo.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<CarpoolerRideInfo> carpoolerRideInfos = new ArrayList<>();
 
     //constructors
     public Carpooler() {
     }
 
-    public Carpooler(String firstName, String lastName, String username, boolean isSmoker, Gender gender, List<Car> cars) {
+    public Carpooler(String firstName, String lastName, String username, boolean isSmoker, Gender gender, List<Car> cars, List<CarpoolerRideInfo> carpoolerRideInfos) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.isSmoker = isSmoker;
         this.gender = gender;
         this.cars = cars;
+        this.carpoolerRideInfos = carpoolerRideInfos;
     }
-
 
     //getters and setters
     public long getCarpoolerId() {
@@ -109,5 +113,17 @@ public class Carpooler implements Serializable {
 
     public void addCar(Car car) {
         this.cars.add(car);
+    }
+
+    public List<CarpoolerRideInfo> getCarpoolerRideInfos() {
+        return carpoolerRideInfos;
+    }
+
+    public void setCarpoolerRideInfos(List<CarpoolerRideInfo> carpoolerRideInfos) {
+        this.carpoolerRideInfos = carpoolerRideInfos;
+    }
+
+    public void addCarpoolerRideInfo(CarpoolerRideInfo carpoolerRideInfo) {
+        this.carpoolerRideInfos.add(carpoolerRideInfo);
     }
 }

@@ -1,4 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
-public class Meeting {
+public enum RideType {
+    Single,
+    BackAndForth
 }
