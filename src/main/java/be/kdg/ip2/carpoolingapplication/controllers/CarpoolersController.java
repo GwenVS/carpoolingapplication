@@ -1,7 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 
 import be.kdg.ip2.carpoolingapplication.domain.Carpooler;
-import be.kdg.ip2.carpoolingapplication.repositories.CarpoolerRepository;
+import be.kdg.ip2.carpoolingapplication.services.CarpoolerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,21 +13,21 @@ import java.util.List;
 public class CarpoolersController {
 
     @Autowired
-    private CarpoolerRepository carpoolerRepository;
+    private CarpoolerService carpoolerService;
 
     @GetMapping
     public List<Carpooler> findAllCarpoolers() {
-        return carpoolerRepository.findAll();
+        return carpoolerService.findAllCarpoolers();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createCarpooler(@RequestBody Carpooler carpooler){
-        carpoolerRepository.save(carpooler);
+        carpoolerService.createCarpooler(carpooler);
     }
 
     @GetMapping("/{carpooler_id}")
     public Carpooler get(@PathVariable("carpooler_id") long carpoolerId){
-        return carpoolerRepository.getOne(carpoolerId);
+        return carpoolerService.getCarpooler(carpoolerId);
     }
 }

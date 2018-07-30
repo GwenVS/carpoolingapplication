@@ -20,15 +20,15 @@ public class CarpoolerRideInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long carpoolerRideInfoId;
 
-    @Column(nullable = false)
+    @Column()
     private boolean isDriver;
 
     @ManyToOne(targetEntity = Carpooler.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="carpoolerId")
+    @JsonIgnore
     private Carpooler carpooler;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="rideId")
+    @JsonIgnore
     private Ride ride;
 
 

@@ -30,21 +30,29 @@ public class Carpooler implements Serializable {
     @Column(nullable = false)
     private Gender gender;
 
-    @Column
+    @Column()
     @OneToMany(mappedBy = "carpooler",targetEntity = Car.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<Car> cars = new ArrayList<>();
+    private List<Car> cars;
 
-    @Column
+    @Column()
     @OneToMany(mappedBy = "carpooler",targetEntity = CarpoolerRideInfo.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<CarpoolerRideInfo> carpoolerRideInfos = new ArrayList<>();
+    private List<CarpoolerRideInfo> carpoolerRideInfos;
+
+    @Column()
+    @OneToMany(mappedBy = "carpooler",targetEntity = RideRequest.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<RideRequest> rideRequests;
 
     //constructors
     public Carpooler() {
+        this.cars = new ArrayList<>();
+        this.carpoolerRideInfos = new ArrayList<>();
+        this.rideRequests = new ArrayList<>();
     }
 
-    public Carpooler(String firstName, String lastName, String username, boolean isSmoker, Gender gender, List<Car> cars, List<CarpoolerRideInfo> carpoolerRideInfos) {
+    public Carpooler(String firstName, String lastName, String username, boolean isSmoker, Gender gender, List<Car> cars, List<CarpoolerRideInfo> carpoolerRideInfos, List<RideRequest> rideRequests) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -52,6 +60,18 @@ public class Carpooler implements Serializable {
         this.gender = gender;
         this.cars = cars;
         this.carpoolerRideInfos = carpoolerRideInfos;
+        this.rideRequests = rideRequests;
+    }
+
+    public Carpooler(String firstName, String lastName, String username, boolean isSmoker, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.isSmoker = isSmoker;
+        this.gender = gender;
+        this.cars = new ArrayList<>();
+        this.carpoolerRideInfos = new ArrayList<>();
+        this.rideRequests = new ArrayList<>();
     }
 
     //getters and setters
@@ -126,4 +146,14 @@ public class Carpooler implements Serializable {
     public void addCarpoolerRideInfo(CarpoolerRideInfo carpoolerRideInfo) {
         this.carpoolerRideInfos.add(carpoolerRideInfo);
     }
+
+    public List<RideRequest> getRideRequests() {
+        return rideRequests;
+    }
+
+    public void setRideRequests(List<RideRequest> rideRequests) {
+        this.rideRequests = rideRequests;
+    }
+
+    public void addRideRequest(RideRequest rideRequest) { this.rideRequests.add(rideRequest); }
 }

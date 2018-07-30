@@ -20,12 +20,6 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long rideId;
 
-    @Column()
-    private Location departureLocation;
-
-    @Column()
-    private Location arrivalLocation;
-
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd@HH:mm:ss")
     private LocalDateTime departureTimeOutwardJourney;
@@ -43,33 +37,64 @@ public class Ride {
     @Column
     @OneToMany(mappedBy = "ride",targetEntity = Location.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<Location> passagepoints = new ArrayList<>();
+    private List<Location> passagepoints;
 
     @Column
     @OneToMany(mappedBy = "ride",targetEntity = CarpoolerRideInfo.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<CarpoolerRideInfo> carpoolerRideInfos = new ArrayList<>();
+    private List<CarpoolerRideInfo> carpoolerRideInfos;
 
     @Column
     @OneToMany(mappedBy = "ride",targetEntity = RideRequest.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<RideRequest> rideRequests = new ArrayList<>();
+    private List<RideRequest> rideRequests;
 
 
     //constructors
     public Ride() {
+        this.passagepoints = new ArrayList<>();
+        this.carpoolerRideInfos = new ArrayList<>();
+        this.rideRequests = new ArrayList<>();
     }
 
-    public Ride(Location departureLocation, Location arrivalLocation, LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, int amountOfPassengers, RideType rideType, List<Location> passagepoints, List<CarpoolerRideInfo> carpoolerRideInfos, List<RideRequest> rideRequests) {
-        this.departureLocation = departureLocation;
-        this.arrivalLocation = arrivalLocation;
+    //ride with returntrip
+    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, int amountOfPassengers, List<Location> passagepoints, List<CarpoolerRideInfo> carpoolerRideInfos, List<RideRequest> rideRequests) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.departureTimeReturnTrip = departureTimeReturnTrip;
         AmountOfPassengers = amountOfPassengers;
-        this.rideType = rideType;
+        this.rideType = RideType.BackAndForth;
         this.passagepoints = passagepoints;
         this.carpoolerRideInfos = carpoolerRideInfos;
         this.rideRequests = rideRequests;
+    }
+
+    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, int amountOfPassengers) {
+        this.departureTimeOutwardJourney = departureTimeOutwardJourney;
+        this.departureTimeReturnTrip = departureTimeReturnTrip;
+        AmountOfPassengers = amountOfPassengers;
+        this.rideType = RideType.BackAndForth;
+        this.passagepoints = new ArrayList<>();
+        this.carpoolerRideInfos = new ArrayList<>();
+        this.rideRequests = new ArrayList<>();
+    }
+
+    //ride without return trip
+    public Ride(LocalDateTime departureTimeOutwardJourney, int amountOfPassengers, List<Location> passagepoints, List<CarpoolerRideInfo> carpoolerRideInfos, List<RideRequest> rideRequests) {
+        this.departureTimeOutwardJourney = departureTimeOutwardJourney;
+        AmountOfPassengers = amountOfPassengers;
+        this.rideType = RideType.Single;
+        this.passagepoints = passagepoints;
+        this.carpoolerRideInfos = carpoolerRideInfos;
+        this.rideRequests = rideRequests;
+    }
+
+    public Ride(LocalDateTime departureTimeOutwardJourney, int amountOfPassengers) {
+        this.departureTimeOutwardJourney = departureTimeOutwardJourney;
+        AmountOfPassengers = amountOfPassengers;
+        this.rideType = RideType.Single;
+        this.passagepoints = new ArrayList<>();
+        this.carpoolerRideInfos = new ArrayList<>();
+        this.rideRequests = new ArrayList<>();
     }
 
 
@@ -80,22 +105,6 @@ public class Ride {
 
     public void setRideId(Long rideId) {
         this.rideId = rideId;
-    }
-
-    public Location getDepartureLocation() {
-        return departureLocation;
-    }
-
-    public void setDepartureLocation(Location departureLocation) {
-        this.departureLocation = departureLocation;
-    }
-
-    public Location getArrivalLocation() {
-        return arrivalLocation;
-    }
-
-    public void setArrivalLocation(Location arrivalLocation) {
-        this.arrivalLocation = arrivalLocation;
     }
 
     public LocalDateTime getDepartureTimeOutwardJourney() {
