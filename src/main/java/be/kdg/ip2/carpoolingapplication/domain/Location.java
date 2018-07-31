@@ -1,6 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -24,6 +25,7 @@ public class Location {
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
     @JoinColumn(name="rideId")
+    @JsonIgnore
     private Ride ride;
 
 

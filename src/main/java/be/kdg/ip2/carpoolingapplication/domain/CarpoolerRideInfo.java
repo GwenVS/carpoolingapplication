@@ -24,10 +24,12 @@ public class CarpoolerRideInfo {
     private boolean isDriver;
 
     @ManyToOne(targetEntity = Carpooler.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="carpoolerId")
     @JsonIgnore
     private Carpooler carpooler;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="rideId")
     @JsonIgnore
     private Ride ride;
 
