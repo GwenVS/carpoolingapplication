@@ -2,7 +2,7 @@ package be.kdg.ip2.carpoolingapplication.controllers;
 
 
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
-import be.kdg.ip2.carpoolingapplication.repositories.RideRepository;
+import be.kdg.ip2.carpoolingapplication.services.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +15,21 @@ public class RidesController {
 
 
     @Autowired
-    private RideRepository rideRepository;
+    private RideService rideService;
 
     @GetMapping
     public List<Ride> findAllRides() {
-        return rideRepository.findAll();
+        return rideService.findAllRides();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createRide(@RequestBody Ride ride){
-        rideRepository.save(ride);
+        rideService.createRide(ride);
     }
 
     @GetMapping("/{ride_id}")
     public Ride get(@PathVariable("ride_id") long rideId){
-        return rideRepository.getOne(rideId);
+        return rideService.getRide(rideId);
     }
 }

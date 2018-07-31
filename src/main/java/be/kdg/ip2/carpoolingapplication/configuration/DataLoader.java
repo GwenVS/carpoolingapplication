@@ -1,4 +1,4 @@
-package be.kdg.ip2.carpoolingapplication;
+package be.kdg.ip2.carpoolingapplication.configuration;
 
 import be.kdg.ip2.carpoolingapplication.domain.*;
 import be.kdg.ip2.carpoolingapplication.repositories.CarpoolerRepository;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * This class is used for placing initial data into the database
+ * This class is used for placing initial testdata into the database
  */
 @Component
 public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
@@ -63,18 +63,13 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         CarpoolerRideInfo carpoolerRideInfo1 = new CarpoolerRideInfo(true, savedCarpooler_M_S_1, savedRide1);
         savedRide1.addCarpoolerRideInfo(carpoolerRideInfo1);
         savedCarpooler_M_S_1.addCarpoolerRideInfo(carpoolerRideInfo1);
-        this.carpoolerRepository.save(savedCarpooler_M_S_1);
-        this.rideRepository.save(savedRide1);
         CarpoolerRideInfo carpoolerRideInfo2 = new CarpoolerRideInfo(false, savedCarpooler_M_S_0, savedRide1);
         savedRide1.addCarpoolerRideInfo(carpoolerRideInfo2);
         savedCarpooler_M_S_0.addCarpoolerRideInfo(carpoolerRideInfo2);
-        this.carpoolerRepository.save(savedCarpooler_M_S_0);
-        this.rideRepository.save(savedRide1);
         // 1 riderequest
         RideRequest rideRequest1 = new RideRequest(savedCarpooler_F_S_2, savedRide1, "I would like to join you for this ride");
         savedRide1.addRideRequest(rideRequest1);
         savedCarpooler_F_S_2.addRideRequest(rideRequest1);
-        this.carpoolerRepository.save(savedCarpooler_F_S_2);
         this.rideRepository.save(savedRide1);
     }
 }

@@ -1,7 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -13,8 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@carpoolerRideInfoId")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@carpoolerRideInfoId")
 public class CarpoolerRideInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,13 +23,13 @@ public class CarpoolerRideInfo {
     private boolean isDriver;
 
     @ManyToOne(targetEntity = Carpooler.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="carpoolerId")
-    @JsonIgnore
+    @JoinColumn(name = "carpoolerId")
+    @JsonIgnoreProperties(value = {"cars", "carpoolerRideInfos", "rideRequests"})
     private Carpooler carpooler;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="rideId")
-    @JsonIgnore
+    @JoinColumn(name = "rideId")
+    @JsonIgnoreProperties(value = {"passagepoints", "carpoolerRideInfos", "rideRequests"})
     private Ride ride;
 
 

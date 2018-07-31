@@ -14,6 +14,7 @@ import java.util.List;
 @Transactional
 @Primary
 public class CarpoolerService {
+
     @Autowired
     private CarpoolerRepository carpoolerRepository;
 
@@ -23,24 +24,24 @@ public class CarpoolerService {
 
     public List<Carpooler> findAllCarpoolers() {
         List<Carpooler> carpoolers = carpoolerRepository.findAll();
-        if(carpoolers == null) {
+        if (carpoolers == null) {
             return new ArrayList<>();
         } else {
             return carpoolers;
         }
     }
 
-    public Carpooler createCarpooler(Carpooler carpooler){
+    public Carpooler createCarpooler(Carpooler carpooler) {
         Carpooler c = carpoolerRepository.save(carpooler);
-        if(c ==null){
+        if (c == null) {
             throw new CarpoolerServiceException("Carpooler not saved");
         }
         return c;
     }
 
-    public Carpooler getCarpooler(long carpoolerId){
+    public Carpooler getCarpooler(long carpoolerId) {
         Carpooler carpooler = carpoolerRepository.getOne(carpoolerId);
-        if(carpooler==null){
+        if (carpooler == null) {
             throw new CarpoolerServiceException("Carpooler not found");
         }
         return carpooler;

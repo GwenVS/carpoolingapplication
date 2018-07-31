@@ -26,6 +26,7 @@ public class Car implements Serializable {
 
     @ManyToOne(targetEntity = Carpooler.class,fetch = FetchType.EAGER)
     @JoinColumn(name="carpoolerId")
+    @JsonIgnoreProperties(value = {"cars", "carpoolerRideInfos", "rideRequests"})
     private Carpooler carpooler;
 
 

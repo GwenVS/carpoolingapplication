@@ -1,7 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -18,12 +18,12 @@ public class RideRequest {
 
     @ManyToOne(targetEntity = Carpooler.class,fetch = FetchType.EAGER)
     @JoinColumn(name="carpoolerId")
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"cars", "carpoolerRideInfos", "rideRequests"})
     private Carpooler carpooler;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
     @JoinColumn(name="rideId")
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"passagepoints", "carpoolerRideInfos", "rideRequests"})
     private Ride ride;
 
     @Column
