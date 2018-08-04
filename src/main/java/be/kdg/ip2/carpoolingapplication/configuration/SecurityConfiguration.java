@@ -1,5 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.configuration;
-
+/*
 import com.auth0.spring.security.api.JwtWebSecurityConfigurer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -31,4 +31,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
     }
 
-}
+}*/

@@ -25,6 +25,9 @@ public class Carpooler implements Serializable {
     private String username;//todo:emailadres: checken op @?
 
     @Column()
+    private String password;
+
+    @Column()
     private boolean isSmoker;
 
     @Column(nullable = false)
@@ -105,6 +108,14 @@ public class Carpooler implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean getIsSmoker() {
