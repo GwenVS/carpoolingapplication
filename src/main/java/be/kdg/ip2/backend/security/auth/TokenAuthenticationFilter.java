@@ -1,6 +1,6 @@
-package be.kdg.ip2.carpoolers.backend.security.auth;
+package be.kdg.ip2.backend.security.auth;
 
-import be.kdg.ip2.carpoolers.backend.security.TokenHelper;
+import be.kdg.ip2.backend.security.TokenHelper;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

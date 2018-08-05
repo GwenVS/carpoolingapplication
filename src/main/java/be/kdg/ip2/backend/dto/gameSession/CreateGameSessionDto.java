@@ -1,4 +1,4 @@
-package be.kdg.ip2.carpoolers.backend.dto.gameSession;
+package be.kdg.ip2.backend.dto.gameSession;
 
 import java.util.List;
 
