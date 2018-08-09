@@ -168,4 +168,14 @@ public class Ride {
     public void addLocation(Location location) {
         this.locations.add(location);
     }
+
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "rideId=" + rideId +
+                ", departureTimeOutwardJourney=" + departureTimeOutwardJourney +
+                ", departureTimeReturnTrip=" + departureTimeReturnTrip +
+                ", rideType=" + rideType +
+                '}';
+    }
 }

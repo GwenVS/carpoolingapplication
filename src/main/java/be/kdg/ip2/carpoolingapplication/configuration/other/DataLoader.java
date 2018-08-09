@@ -5,6 +5,7 @@ import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.services.RideService;
+import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 import be.kdg.ip2.carpoolingapplication.services.implementation.CustomUserDetailsService;
 import be.kdg.ip2.carpoolingapplication.domain.user.Gender;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
@@ -39,7 +40,12 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
 
 
         // testride with 3 seats
-        Ride ride1 = this.rideService.saveRide(new Ride(LocalDateTime.of(2019, 1, 1, 7, 30), LocalDateTime.of(2019, 1, 1, 17, 30)));
+        Ride ride1 = null;
+        try {
+            ride1 = this.rideService.saveRide(new Ride(LocalDateTime.of(2019, 1, 1, 7, 30), LocalDateTime.of(2019, 1, 1, 17, 30)));
+        } catch (RideServiceException e) {
+            e.printStackTrace();
+        }
         // passagepoints
         ride1.addLocation(new Location(51.260197, 4.402771, ride1));//antwerpen
         ride1.addLocation(new Location(51.02574, 4.47762, ride1));//mechelen
@@ -55,7 +61,11 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         RideRequest rideRequest1 = new RideRequest(carpooler_M_NS_1, ride1, "I would like to join you for this ride");
         ride1.addRideRequest(rideRequest1);
         carpooler_M_NS_1.addRideRequest(rideRequest1);
-        this.rideService.saveRide(ride1);
+        try {
+            this.rideService.saveRide(ride1);
+        } catch (RideServiceException e) {
+            e.printStackTrace();
+        }
 
     }
 }

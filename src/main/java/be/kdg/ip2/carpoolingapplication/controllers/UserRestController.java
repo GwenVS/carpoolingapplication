@@ -6,6 +6,7 @@ import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import be.kdg.ip2.carpoolingapplication.services.declaration.AuthenticationHelperService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.StorageService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.UserService;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:9090")
 public class UserRestController {
-    private final Logger logger = Logger.getLogger(UserRestController.class);
+    private static final Logger logger = LogManager.getLogger(UserRestController.class);
     private final UserService userService;
     private final AuthenticationHelperService authenticationHelperService;
 

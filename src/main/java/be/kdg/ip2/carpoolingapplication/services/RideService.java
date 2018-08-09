@@ -29,7 +29,7 @@ public class RideService {
         }
     }
 
-    public Ride saveRide(Ride ride) {
+    public Ride saveRide(Ride ride) throws RideServiceException {
         Ride r = rideRepository.save(ride);
         if (r == null) {
             throw new RideServiceException("Ride not saved");
@@ -38,7 +38,7 @@ public class RideService {
     }
 
 
-    public Ride getRide(long rideId) {
+    public Ride getRide(long rideId) throws RideServiceException {
         Ride ride = rideRepository.getOne(rideId);
         if(ride == null) {
             throw new RideServiceException("Ride not found");

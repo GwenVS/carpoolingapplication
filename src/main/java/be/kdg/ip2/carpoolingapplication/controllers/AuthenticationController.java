@@ -5,6 +5,7 @@ import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
 import be.kdg.ip2.carpoolingapplication.security.auth.JwtAuthenticationRequest;
 import be.kdg.ip2.carpoolingapplication.services.declaration.AuthenticationHelperService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CustomAuthenticationException;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @CrossOrigin(origins = "http://localhost:9090")
 public class AuthenticationController {
-    private final Logger logger = Logger.getLogger(UserRestController.class);
+    private static final Logger logger = LogManager.getLogger(UserRestController.class);
     private final AuthenticationHelperService authenticationHelperService;
 
     @Autowired

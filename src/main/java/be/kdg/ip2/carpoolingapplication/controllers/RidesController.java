@@ -1,6 +1,8 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.services.RideService;
+import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:9090")
 public class RidesController {
-    private final Logger logger = Logger.getLogger(RidesController.class);
+    private static final Logger logger = LogManager.getLogger(RidesController.class);
 
     @Autowired
     private RideService rideService;
@@ -27,13 +29,26 @@ public class RidesController {
     @PostMapping(("/api/private/rides"))
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public void createRide(@RequestBody Ride ride){
-        rideService.saveRide(ride);
+    public Ride createRide(@RequestBody Ride ride) throws RideServiceException {
+        try {
+            Ride ride1 = rideService.saveRide(ride);
+            logger.info("@RidesController: new ride created.");
+            return ride1;
+        } catch (RideServiceException e) {
+            logger.error("@RidesController: error while creating new ride: " + ride.toString() + "error: "+  e.getMessage(), e);
+            throw new RideServiceException(e.getMessage());
+        }
     }
 
     @GetMapping("/api/public/rides/{ride_id}")
-    public Ride get(@PathVariable("ride_id") long rideId){
-        return rideService.getRide(rideId);
+    public Ride get(@PathVariable("ride_id") long rideId) throws RideServiceException {
+
+        try {
+            return rideService.getRide(rideId);
+        } catch (RideServiceException e) {
+            logger.error("@RidesController: error while getting ride: rideId: " + rideId, e);
+            throw new RideServiceException(e.getMessage());
+        }
     }
 
     @GetMapping("/api/public/rides/time/{min_departure_time}/{max_departure_time}")

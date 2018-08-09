@@ -6,6 +6,8 @@ import be.kdg.ip2.carpoolingapplication.repository.declaration.UserRepository;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.UserServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +26,7 @@ import java.util.Arrays;
 @Primary
 public class CustomUserDetailsService implements UserDetailsService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+    private static final Logger logger = LogManager.getLogger(CustomUserDetailsService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -51,16 +53,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         String username = currentUser.getName();
 
         if (authenticationManager != null) {
-            LOGGER.debug("Re-authenticating user '"+ username + "' for password change request.");
+            logger.debug("Re-authenticating user '"+ username + "' for password change request.");
 
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
         } else {
-            LOGGER.debug("No authentication manager set. can't change Password!");
+            logger.debug("No authentication manager set. can't change Password!");
 
             return;
         }
 
-        LOGGER.debug("Changing password for user '"+ username + "'");
+        logger.debug("Changing password for user '"+ username + "'");
 
         User user = (User) loadUserByUsername(username);
 
