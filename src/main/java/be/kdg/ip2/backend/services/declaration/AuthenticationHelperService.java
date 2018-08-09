@@ -1,10 +1,10 @@
-package be.kdg.ip2.backend.service.declaration;
+package be.kdg.ip2.backend.services.declaration;
 
 import be.kdg.ip2.backend.domain.user.User;
 import be.kdg.ip2.backend.domain.user.UserTokenState;
 import be.kdg.ip2.backend.dto.UserDto;
 import be.kdg.ip2.backend.security.auth.JwtAuthenticationRequest;
-import be.kdg.ip2.backend.service.exception.CustomAuthenticationException;
+import be.kdg.ip2.backend.services.exceptions.CustomAuthenticationException;
 import org.springframework.mobile.device.Device;
 
 import javax.servlet.http.HttpServletRequest;

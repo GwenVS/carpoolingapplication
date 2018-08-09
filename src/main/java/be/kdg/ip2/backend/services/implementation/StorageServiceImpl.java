@@ -1,7 +1,7 @@
-package be.kdg.ip2.backend.service.implementation;
+package be.kdg.ip2.backend.services.implementation;
 
-import be.kdg.ip2.backend.service.exception.StorageServiceException;
-import be.kdg.ip2.backend.service.declaration.StorageService;
+import be.kdg.ip2.backend.services.exceptions.StorageServiceException;
+import be.kdg.ip2.backend.services.declaration.StorageService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

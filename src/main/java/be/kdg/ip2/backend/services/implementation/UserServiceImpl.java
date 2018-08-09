@@ -1,11 +1,11 @@
-package be.kdg.ip2.backend.service.implementation;
+package be.kdg.ip2.backend.services.implementation;
 
 import be.kdg.ip2.backend.domain.user.Authority;
 import be.kdg.ip2.backend.domain.user.User;
 import be.kdg.ip2.backend.domain.user.UserRideInfo;
 import be.kdg.ip2.backend.repository.declaration.UserRepository;
-import be.kdg.ip2.backend.service.declaration.UserService;
-import be.kdg.ip2.backend.service.exception.UserServiceException;
+import be.kdg.ip2.backend.services.declaration.UserService;
+import be.kdg.ip2.backend.services.exceptions.UserServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;

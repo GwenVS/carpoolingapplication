@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.kdg.ip2.backend.service.exception;
+package be.kdg.ip2.backend.services.exceptions;
 
 /**
  * @author deketelw

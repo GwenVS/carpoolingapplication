@@ -1,14 +1,14 @@
-package be.kdg.ip2.backend.service.implementation;
+package be.kdg.ip2.backend.services.implementation;
 
 import be.kdg.ip2.backend.configuration.other.DeviceProvider;
 import be.kdg.ip2.backend.domain.user.User;
 import be.kdg.ip2.backend.domain.user.UserTokenState;
 import be.kdg.ip2.backend.dto.UserDto;
 import be.kdg.ip2.backend.security.auth.JwtAuthenticationRequest;
-import be.kdg.ip2.backend.service.exception.CustomAuthenticationException;
+import be.kdg.ip2.backend.services.exceptions.CustomAuthenticationException;
 import be.kdg.ip2.backend.security.TokenHelper;
-import be.kdg.ip2.backend.service.declaration.AuthenticationHelperService;
-import be.kdg.ip2.backend.service.declaration.UserService;
+import be.kdg.ip2.backend.services.declaration.AuthenticationHelperService;
+import be.kdg.ip2.backend.services.declaration.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mobile.device.Device;

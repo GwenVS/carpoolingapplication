@@ -1,8 +1,8 @@
-package be.kdg.ip2.backend.service.declaration;
+package be.kdg.ip2.backend.services.declaration;
 
 import be.kdg.ip2.backend.domain.user.User;
 import be.kdg.ip2.backend.domain.user.UserRideInfo;
-import be.kdg.ip2.backend.service.exception.UserServiceException;
+import be.kdg.ip2.backend.services.exceptions.UserServiceException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

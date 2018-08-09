@@ -1,9 +1,9 @@
-package be.kdg.ip2.backend.service.implementation;
+package be.kdg.ip2.backend.services.implementation;
 
 import be.kdg.ip2.backend.domain.user.Authority;
 import be.kdg.ip2.backend.domain.user.User;
 import be.kdg.ip2.backend.repository.declaration.UserRepository;
-import be.kdg.ip2.backend.service.exception.UserServiceException;
+import be.kdg.ip2.backend.services.exceptions.UserServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

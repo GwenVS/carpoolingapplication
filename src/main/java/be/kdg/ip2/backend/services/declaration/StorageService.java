@@ -1,4 +1,4 @@
-package be.kdg.ip2.backend.service.declaration;
+package be.kdg.ip2.backend.services.declaration;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package be.kdg.ip2.backend.service.exception;
+package be.kdg.ip2.backend.services.exceptions;
 
 public class ConversionException extends RuntimeException {
     public ConversionException(String message){
