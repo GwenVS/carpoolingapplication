@@ -1,6 +1,6 @@
 package be.kdg.ip2.backend.configuration.security;
 
-import be.kdg.ip2.backend.service.implementation.CustomUserDetailsService;
+import be.kdg.ip2.backend.services.implementation.CustomUserDetailsService;
 import be.kdg.ip2.backend.security.TokenHelper;
 import be.kdg.ip2.backend.security.auth.RestAuthenticationEntryPoint;
 import be.kdg.ip2.backend.security.auth.TokenAuthenticationFilter;
@@ -59,10 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // By default, Spring Security will create a session when it needs one
         // Stateless --> No session will be created or used by spring security (a guarantee that the application will not create any session at all)
 
-
         // UsernamePasswordAuthenticationFilter -> Processes an authentication form submission (by default responds to the URL /login.)
-
-
         http
                 .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

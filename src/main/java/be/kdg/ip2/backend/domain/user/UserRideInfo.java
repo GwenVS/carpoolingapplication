@@ -1,5 +1,6 @@
 package be.kdg.ip2.backend.domain.user;
 
+import be.kdg.ip2.backend.domain.Ride;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 /**
  * Model class that connects rides with carpoolers
- * When a carpooler is part of a Ride this CarpoolerRideInfo will be generated
+ * When a carpooler is part of a Ride this UserRideInfo will be generated
  */
 @Entity
 @Table
@@ -26,20 +27,27 @@ public class UserRideInfo {
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
-    @JsonIgnoreProperties(value = {"cars", "carpoolerRideInfos", "rideRequests"})
+    @JsonIgnoreProperties(value = {"authorities", "cars", "userRideInfos", "rideRequests"})
     private User user;
 
+    @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "rideId")
+    @JsonIgnoreProperties(value = {"subRides", "userRideInfos", "rideRequests", "locations"})
+    private Ride ride;
+
+
     //constructors
-
-
     public UserRideInfo() {
     }
 
-    public UserRideInfo(boolean isDriver, User user) {
+    public UserRideInfo(boolean isDriver, User user, Ride ride) {
         this.isDriver = isDriver;
         this.user = user;
+        this.ride = ride;
     }
 
+
+    //getters and setters
     public Long getUserRideInfoId() {
         return userRideInfoId;
     }
@@ -62,5 +70,13 @@ public class UserRideInfo {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Ride getRide() {
+        return ride;
+    }
+
+    public void setRide(Ride ride) {
+        this.ride = ride;
     }
 }

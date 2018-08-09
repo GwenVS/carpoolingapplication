@@ -1,6 +1,7 @@
 package be.kdg.ip2.backend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -21,8 +22,8 @@ public class Authority implements GrantedAuthority{
     private String name;
 
     @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    //JsonIgnore
-    @JoinColumn(name="user_id")
+    @JsonIgnoreProperties(value = {"authorities", "cars", "userRideInfos", "rideRequests"})
+    @JoinColumn(name="userId")
     private User user;
 
     public Authority() {

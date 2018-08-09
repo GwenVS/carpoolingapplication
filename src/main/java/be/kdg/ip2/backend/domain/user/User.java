@@ -1,7 +1,11 @@
 package be.kdg.ip2.backend.domain.user;
 
+import be.kdg.ip2.backend.domain.Car;
+import be.kdg.ip2.backend.domain.Ride;
+import be.kdg.ip2.backend.domain.RideRequest;
 import be.kdg.ip2.backend.dto.UpdateuserDto;
 import be.kdg.ip2.backend.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Model class that represents a user
+ * Model class that represents a carpooler: user of the platform
  */
 
 @Entity
@@ -22,7 +26,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Indicates that the persistence provider must assign primary keys for the entity using a database identity column.
-    @Column(nullable = false, name = "user_id")
+    @Column(nullable = false)
     private long userId;
 
     @Column(length = 50, nullable = false)
@@ -57,11 +61,20 @@ public class User implements UserDetails {
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Authority> authorities = new ArrayList<>();
 
+    @Column()
+    @OneToMany(mappedBy = "user",targetEntity = Car.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<Car> cars = new ArrayList<>();
 
     @Column
-    @OneToMany(targetEntity = UserRideInfo.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(mappedBy = "user", targetEntity = UserRideInfo.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<UserRideInfo> userRideInfos = new ArrayList<>();
+
+    @Column
+    @OneToMany(mappedBy = "user", targetEntity = RideRequest.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<RideRequest> rideRequests = new ArrayList<>();
 
     @Column
     private String profilePictureFileName = "default-profile.png";
@@ -105,12 +118,6 @@ public class User implements UserDetails {
         this.gender = gender;
         this.authorities = authorities;
     }
-
-    public void addUserRideInfo(UserRideInfo userRideInfo){
-        this.userRideInfos.add(userRideInfo);
-    }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -222,6 +229,16 @@ public class User implements UserDetails {
         this.year = year;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    public void addCar(Car car) { this.cars.add(car); }
+
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
     }
@@ -243,6 +260,20 @@ public class User implements UserDetails {
     public void setUserRideInfos(List<UserRideInfo> userRideInfos) {
         this.userRideInfos = userRideInfos;
     }
+
+    public void addUserRideInfo(UserRideInfo userRideInfo){
+        this.userRideInfos.add(userRideInfo);
+    }
+
+    public List<RideRequest> getRideRequests() {
+        return rideRequests;
+    }
+
+    public void setRideRequests(List<RideRequest> rideRequests) {
+        this.rideRequests = rideRequests;
+    }
+
+    public void addRideRequest(RideRequest rideRequest) { this.rideRequests.add(rideRequest); }
 
     public String getProfilePictureFileName() {
         return profilePictureFileName;
