@@ -70,7 +70,7 @@ task fatJar(type: Jar) {
 	manifest {
 		attributes 'Carpoolingapplication': 'App for carpoolers',
 				'test-version': version,
-				'Main-Class': 'be.kdg.kandoe.CarpoolingapplicationApplication'
+				'Main-Class': 'be.kdg.ip2.carpoolingapplication.CarpoolingapplicationApplication'
 	}
 	baseName = project.name
 	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
