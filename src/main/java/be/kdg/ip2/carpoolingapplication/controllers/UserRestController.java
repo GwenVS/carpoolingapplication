@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = "https://carpoolingapplication.herokuapp.com")
 public class UserRestController {
     private static final Logger logger = LogManager.getLogger(UserRestController.class);
     private final UserService userService;
