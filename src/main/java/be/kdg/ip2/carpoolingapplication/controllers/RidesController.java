@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://carpoolingapplication.herokuapp.com")
+@CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class RidesController {
     private static final Logger logger = LogManager.getLogger(RidesController.class);
 
