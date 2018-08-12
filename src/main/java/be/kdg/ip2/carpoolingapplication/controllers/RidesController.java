@@ -6,6 +6,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,28 +27,34 @@ public class RidesController {
         return rideService.getAllRides();
     }
 
+    //todo: return responsestatus
     @PostMapping(("/api/private/rides"))
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public Ride createRide(@RequestBody Ride ride) throws RideServiceException {
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity createRide(@RequestBody Ride ride) {
         try {
             Ride ride1 = rideService.saveRide(ride);
             logger.info("@RidesController: new ride created.");
-            return ride1;
+            return ResponseEntity.ok(ride1);
         } catch (RideServiceException e) {
             logger.error("@RidesController: error while creating new ride: " + ride.toString() + "error: "+  e.getMessage(), e);
-            throw new RideServiceException(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("RideServiceException: "+ e.getMessage());
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while registering. Try again later");
         }
     }
 
+    //todo: return responsestatus
     @GetMapping("/api/public/rides/{ride_id}")
-    public Ride get(@PathVariable("ride_id") long rideId) throws RideServiceException {
-
+    public ResponseEntity get(@PathVariable("ride_id") long rideId) {
         try {
-            return rideService.getRide(rideId);
+            Ride ride = rideService.getRide(rideId);
+            return ResponseEntity.ok(ride);
         } catch (RideServiceException e) {
             logger.error("@RidesController: error while getting ride: rideId: " + rideId, e);
-            throw new RideServiceException(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("RideServiceException: "+ e.getMessage());
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while registering. Try again later");
         }
     }
 

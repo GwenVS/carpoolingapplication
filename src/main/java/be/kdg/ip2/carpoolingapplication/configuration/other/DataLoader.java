@@ -44,7 +44,7 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         try {
             ride1 = this.rideService.saveRide(new Ride(LocalDateTime.of(2019, 1, 1, 7, 30), LocalDateTime.of(2019, 1, 1, 17, 30)));
         } catch (RideServiceException e) {
-            e.printStackTrace();
+            System.out.println("@DataLoader: if this goes wrong, i dunno anymore xD");
         }
         // passagepoints
         ride1.addLocation(new Location(51.260197, 4.402771, ride1));//antwerpen
@@ -64,7 +64,7 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         try {
             this.rideService.saveRide(ride1);
         } catch (RideServiceException e) {
-            e.printStackTrace();
+            System.out.println("@DataLoader: if this goes wrong, i dunno anymore xD");
         }
 
     }
