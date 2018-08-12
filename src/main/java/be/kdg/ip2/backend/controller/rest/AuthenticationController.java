@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @RestController
-@CrossOrigin(origins = "https://carpoolingapplication.herokuapp.com")
+@CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class AuthenticationController {
     private final Logger logger = Logger.getLogger(UserRestController.class);
     private final AuthenticationHelperService authenticationHelperService;
