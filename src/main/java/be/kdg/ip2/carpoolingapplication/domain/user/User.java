@@ -2,15 +2,15 @@ package be.kdg.ip2.carpoolingapplication.domain.user;
 
 import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
-import be.kdg.ip2.carpoolingapplication.dto.UpdateuserDto;
+import be.kdg.ip2.carpoolingapplication.dto.UpdateUserDto;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,14 +39,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private int day;
-
-    @Column(nullable = false)
-    private int month;
-
-    @Column(nullable = false)
-    private int year;
+    @Column
+    private LocalDate birthday;
 
     @Column(nullable = false)
     private String encryptedPassword;
@@ -87,31 +81,25 @@ public class User implements UserDetails {
         this.lastName = userDto.getLastName();
         this.username = userDto.getUsername();
         this.email = userDto.getEmail();
-        this.year = userDto.getYear();
-        this.month = userDto.getMonth();
-        this.day = userDto.getDay();
+        this.birthday = userDto.getBirthday();
         this.gender = userDto.getGender();
         this.encryptedPassword = userDto.getPassword();
     }
 
-    public User(UpdateuserDto updateuserDto){
+    public User(UpdateUserDto updateuserDto){
         this.firstName = updateuserDto.getFirstName();
         this.lastName = updateuserDto.getLastName();
         this.encryptedPassword = updateuserDto.getPassword();
         this.gender = updateuserDto.getGender();
-        this.year = updateuserDto.getYear();
-        this.month = updateuserDto.getMonth();
-        this.day = updateuserDto.getDay();
+        this.birthday = updateuserDto.getBirthday();
     }
 
-    public User(String firstName, String lastName, String username, String email, int day, int month, int year, String encryptedPassword, Gender gender, List<Authority> authorities) {
+    public User(String firstName, String lastName, String username, String email, LocalDate birthday, String encryptedPassword, Gender gender, List<Authority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        this.birthday = birthday;
         this.encryptedPassword = encryptedPassword;
         this.gender = gender;
         this.authorities = authorities;
@@ -203,28 +191,12 @@ public class User implements UserDetails {
         this.gender = gender;
     }
 
-    public int getDay() {
-        return day;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public List<Car> getCars() {
@@ -243,12 +215,6 @@ public class User implements UserDetails {
 
     public List<Authority> getUserRoles(){
         return this.authorities;
-    }
-
-    public Calendar getBirthday(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(getYear(), getMonth() - 1, getDay());
-        return calendar;
     }
 
     public List<UserRideInfo> getUserRideInfos() {

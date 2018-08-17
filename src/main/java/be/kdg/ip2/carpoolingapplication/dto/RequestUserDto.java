@@ -1,9 +1,8 @@
 package be.kdg.ip2.carpoolingapplication.dto;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.Gender;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RequestUserDto {
     private String username;
@@ -34,18 +33,14 @@ public class RequestUserDto {
         this.role = role;
     }
 
-    public RequestUserDto(String username, String firstName, String lastName, String email, Calendar dateTime, Gender gender) {
+    public RequestUserDto(String username, String firstName, String lastName, String email, String birthday, Gender gender) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        this.birthday = format.format(dateTime.getTime());
+        this.birthday = birthday;
         this.gender = gender.name();
     }
-
-
 
     public String getUsername() {
         return username;

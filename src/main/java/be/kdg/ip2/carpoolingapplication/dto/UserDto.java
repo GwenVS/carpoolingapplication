@@ -2,7 +2,7 @@ package be.kdg.ip2.carpoolingapplication.dto;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.Gender;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class UserDto {
     private String username;
@@ -12,21 +12,7 @@ public class UserDto {
     private String email;
     private int age;
     private Gender gender;
-    private Calendar birthday;
-
-    public UserDto() {
-    }
-
-    public UserDto(String username, String password, String firstName, String lastName, String email, int age, Gender gender, Calendar birthday) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.age = age;
-        this.birthday = birthday;
-        this.gender = gender;
-    }
+    private LocalDate birthday;
 
     public String getUsername() {
         return username;
@@ -84,25 +70,11 @@ public class UserDto {
         this.gender = gender;
     }
 
-    public Calendar getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Calendar birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
-
-    public int getYear(){
-        return birthday.get(Calendar.YEAR);
-    }
-
-    public int getMonth(){
-        //The months in calendar go from {0-11} (so we have to add 1)
-        return birthday.get(Calendar.MONTH) + 1;
-    }
-
-    public int getDay(){
-        return birthday.get(Calendar.DAY_OF_MONTH);
-    }
-
 }

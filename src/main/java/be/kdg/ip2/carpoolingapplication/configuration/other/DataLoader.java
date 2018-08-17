@@ -14,6 +14,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -32,11 +33,11 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        User carpooler_M_S_1 = this.userService.addUser(new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", 6, 3, 1997, "testtest", Gender.Male, new ArrayList<>()));
+        User carpooler_M_S_1 = this.userService.addUser(new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>()));
 
-        User carpooler_F_S_2 = this.userService.addUser(new User("Jane", "Doe", "jane", "carpooler_F_S_2@Doe.com", 1, 2, 1996, "testtest", Gender.Female, new ArrayList<>()));
+        User carpooler_F_S_2 = this.userService.addUser(new User("Jane", "Doe", "jane", "carpooler_F_S_2@Doe.com", LocalDate.of(1996, 2, 1), "testtest", Gender.Female, new ArrayList<>()));
 
-        User carpooler_M_NS_1 = this.userService.addUser(new User("Richard", "Roe", "richard", "carpooler_M_NS_1@Roe.com", 1, 4, 1984, "testtest", Gender.Male, new ArrayList<>()));
+        User carpooler_M_NS_1 = this.userService.addUser(new User("Richard", "Roe", "richard", "carpooler_M_NS_1@Roe.com", LocalDate.of(1991, 11, 1), "testtest", Gender.Male, new ArrayList<>()));
 
 
         // testride with 3 seats
