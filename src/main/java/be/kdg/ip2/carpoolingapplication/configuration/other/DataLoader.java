@@ -3,6 +3,7 @@ package be.kdg.ip2.carpoolingapplication.configuration.other;
 import be.kdg.ip2.carpoolingapplication.domain.*;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.UserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 import be.kdg.ip2.carpoolingapplication.services.implementation.CustomUserDetailsService;
 import be.kdg.ip2.carpoolingapplication.domain.user.Gender;
@@ -23,23 +24,28 @@ import java.util.List;
 
 @Component
 public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
-    @Autowired
-    private CustomUserDetailsService userService;
+
+    private CustomUserDetailsService customUserDetailsService;
+    private UserService userService;
+    private IRideService rideService;
 
     @Autowired
-    private IRideService rideService;
+    public DataLoader(CustomUserDetailsService customUserDetailsService, UserService userService, IRideService rideService) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.userService = userService;
+        this.rideService = rideService;
+    }
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        User carpooler_M_S_1 =this.userService.addUser( new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>()));
+        User carpooler_M_S_1 =this.customUserDetailsService.addUser( new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>()));
         carpooler_M_S_1.addCar(new Car("Daihatsu terios", 8.5, 3, carpooler_M_S_1));
         carpooler_M_S_1.addCar(new Car("citroën DS4", 6.2, 2, carpooler_M_S_1));
-        this.userService.addUser(carpooler_M_S_1);
+        userService.saveUser(carpooler_M_S_1);
+        User carpooler_F_S_2 = this.customUserDetailsService.addUser(new User("Jane", "Doe", "jane", "carpooler_F_S_2@Doe.com", LocalDate.of(1996, 2, 1), "testtest", Gender.Female, new ArrayList<>()));
 
-        User carpooler_F_S_2 = this.userService.addUser(new User("Jane", "Doe", "jane", "carpooler_F_S_2@Doe.com", LocalDate.of(1996, 2, 1), "testtest", Gender.Female, new ArrayList<>()));
-
-        User carpooler_M_NS_1 = this.userService.addUser(new User("Richard", "Roe", "richard", "carpooler_M_NS_1@Roe.com", LocalDate.of(1991, 11, 1), "testtest", Gender.Male, new ArrayList<>()));
+        User carpooler_M_NS_1 = this.customUserDetailsService.addUser(new User("Richard", "Roe", "richard", "carpooler_M_NS_1@Roe.com", LocalDate.of(1991, 11, 1), "testtest", Gender.Male, new ArrayList<>()));
 
 
         // testride with 3 seats
