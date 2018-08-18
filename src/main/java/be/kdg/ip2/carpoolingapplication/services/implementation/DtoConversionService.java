@@ -1,10 +1,13 @@
 package be.kdg.ip2.carpoolingapplication.services.implementation;
 
+import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
+import be.kdg.ip2.carpoolingapplication.dto.CreateRideDto;
 import be.kdg.ip2.carpoolingapplication.dto.RequestUserDto;
 import be.kdg.ip2.carpoolingapplication.dto.UpdateUserDto;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IDtoConversionService;
+import be.kdg.ip2.carpoolingapplication.services.exceptions.ConversionException;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -55,12 +59,32 @@ public class DtoConversionService implements IDtoConversionService {
         return modelMapper.map(updateUserDto, User.class);
     }
 
-    private Converter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
-        @Override
-        protected LocalDate convert(String source) {
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate localDate = LocalDate.parse(source, format);
+    @Override
+    public Ride createRideDtoToRide(CreateRideDto createRideDto) {
+        Ride ride = modelMapper.map(createRideDto, Ride.class);
+        //modelmapper has trouble converting the date , so set it manually after conversion
+        ride.setDepartureTimeOutwardJourney(stringToLocalDateTime(createRideDto.getDepartureTimeOutwardJourney()));
+        ride.setDepartureTimeReturnTrip(stringToLocalDateTime(createRideDto.getDepartureTimeReturnTrip()));
+        return ride;
+    }
+
+    private LocalDate stringToLocalDate(String localDateString) throws ConversionException{
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try{
+            LocalDate localDate = LocalDate.parse(localDateString, format);
             return localDate;
+        } catch (Exception e){
+            throw new ConversionException("error while parsing date");
+        }
+    }
+
+    private LocalDateTime stringToLocalDateTime(String localDateTimeString) throws ConversionException {
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd@HH:mm:ss");
+            try {
+                LocalDateTime localDateTime = LocalDateTime.parse(localDateTimeString, format);
+                return localDateTime;
+            } catch (Exception e){
+                throw new ConversionException("error while parsing dateTime");
         }
     };
 }

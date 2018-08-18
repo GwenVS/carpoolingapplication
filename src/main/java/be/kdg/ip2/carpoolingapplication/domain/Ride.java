@@ -1,5 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
+import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -31,6 +32,12 @@ public class Ride {
 
     @Column(nullable = false)
     private RideType rideType;
+
+    @Column()
+    private String CreatorDriverUsername;
+
+    @Column()
+    private Long carId;
 
     @Column
     @OneToMany(mappedBy = "ride", targetEntity = SubRide.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -119,6 +126,22 @@ public class Ride {
 
     public void setRideType(RideType rideType) {
         this.rideType = rideType;
+    }
+
+    public String getCreatorDriverUsername() {
+        return CreatorDriverUsername;
+    }
+
+    public void setCreatorDriverUsername(String creatorDriverUsername) {
+        CreatorDriverUsername = creatorDriverUsername;
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public List<SubRide> getSubRides() {

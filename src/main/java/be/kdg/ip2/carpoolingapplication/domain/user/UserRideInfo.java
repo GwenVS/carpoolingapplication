@@ -57,12 +57,12 @@ public class UserRideInfo {
         this.userRideInfoId = userRideInfoId;
     }
 
-    public boolean isDriver() {
+    public boolean getIsDriver() {
         return isDriver;
     }
 
-    public void setDriver(boolean driver) {
-        isDriver = driver;
+    public void setIsDriver(boolean isDriver) {
+        this.isDriver = isDriver;
     }
 
     public User getUser() {
