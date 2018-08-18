@@ -1,11 +1,11 @@
 package be.kdg.ip2.carpoolingapplication.domain;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table()
@@ -18,23 +18,23 @@ public class SubRide {
     private Long subRideId;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "subRide")
-    private Location startLocation;
+    private StartLocation startLocation;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "subRide")
-    private Location stopLocation;
+    private EndLocation endLocation;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "rideId")
-    @JsonIgnoreProperties(value = {"subRides", "userRideInfos", "rideRequests", "locations"})
+    @JsonIgnore
     private Ride ride;
 
     //constructors
     public SubRide() {
     }
 
-    public SubRide(Location startLocation, Location stopLocation, Ride ride) {
+    public SubRide(StartLocation startLocation, EndLocation endLocation, Ride ride) {
         this.startLocation = startLocation;
-        this.stopLocation = stopLocation;
+        this.endLocation = endLocation;
         this.ride = ride;
     }
 
@@ -47,20 +47,20 @@ public class SubRide {
         this.subRideId = subRideId;
     }
 
-    public Location getStartLocation() {
+    public StartLocation getStartLocation() {
         return startLocation;
     }
 
-    public void setStartLocation(Location startLocation) {
+    public void setStartLocation(StartLocation startLocation) {
         this.startLocation = startLocation;
     }
 
-    public Location getStopLocation() {
-        return stopLocation;
+    public EndLocation getEndLocation() {
+        return endLocation;
     }
 
-    public void setStopLocation(Location stopLocation) {
-        this.stopLocation = stopLocation;
+    public void setEndLocation(EndLocation endLocation) {
+        this.endLocation = endLocation;
     }
 
     public Ride getRide() {

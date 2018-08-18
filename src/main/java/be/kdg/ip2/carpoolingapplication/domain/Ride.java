@@ -1,6 +1,4 @@
 package be.kdg.ip2.carpoolingapplication.domain;
-
-import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -55,16 +53,16 @@ public class Ride {
     private List<RideRequest> rideRequests = new ArrayList<>();
 
     @Column
-    @OneToMany(mappedBy = "ride", targetEntity = Location.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ride", targetEntity = RideLocation.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<Location> locations = new ArrayList<>();
+    private List<RideLocation> locations = new ArrayList<>();
 
     //constructors
     public Ride() {
     }
 
     //ride with returntrip
-    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests, List<Location> locations) {
+    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests, List<RideLocation> locations) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.departureTimeReturnTrip = departureTimeReturnTrip;
         this.rideType = RideType.BackAndForth;
@@ -80,7 +78,7 @@ public class Ride {
     }
 
     //ride without return trip
-    public Ride(LocalDateTime departureTimeOutwardJourney, List<Location> locations, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests) {
+    public Ride(LocalDateTime departureTimeOutwardJourney, List<RideLocation> locations, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.rideType = RideType.Single;
         this.userRideInfos = userRideInfos;
@@ -180,15 +178,15 @@ public class Ride {
         this.rideRequests.add(rideRequest);
     }
 
-    public List<Location> getLocations() {
+    public List<RideLocation> getLocations() {
         return locations;
     }
 
-    public void setLocations(List<Location> locations) {
+    public void setLocations(List<RideLocation> locations) {
         this.locations = locations;
     }
 
-    public void addLocation(Location location) {
+    public void addLocation(RideLocation location) {
         this.locations.add(location);
     }
 

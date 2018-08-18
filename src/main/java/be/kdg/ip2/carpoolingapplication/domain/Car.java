@@ -6,13 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @JsonIdentityInfo(generator= ObjectIdGenerators.UUIDGenerator.class, property="@carId")
-public class Car implements Serializable {
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long carId;

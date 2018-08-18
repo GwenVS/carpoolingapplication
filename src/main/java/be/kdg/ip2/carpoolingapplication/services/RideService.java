@@ -1,13 +1,9 @@
 package be.kdg.ip2.carpoolingapplication.services;
 
-import be.kdg.ip2.carpoolingapplication.domain.Car;
-import be.kdg.ip2.carpoolingapplication.domain.Location;
-import be.kdg.ip2.carpoolingapplication.domain.Ride;
-import be.kdg.ip2.carpoolingapplication.domain.SubRide;
+import be.kdg.ip2.carpoolingapplication.domain.*;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
-import be.kdg.ip2.carpoolingapplication.repository.CarRepository;
-import be.kdg.ip2.carpoolingapplication.repository.RideRepository;
+import be.kdg.ip2.carpoolingapplication.repository.declaration.*;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.UserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
@@ -28,12 +24,19 @@ public class RideService implements IRideService {
     private UserService userService;
     private RideRepository rideRepository;
     private CarRepository carRepository;
+    private SubRideRepository subRideRepository;
+    private LocationRepository locationRepository;
+    private UserRideInfoRepository userRideInfoRepository;
+
 
     @Autowired
-    public RideService(UserService userService, RideRepository rideRepository, CarRepository carRepository) {
+    public RideService(UserService userService, RideRepository rideRepository, CarRepository carRepository, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
         this.userService = userService;
         this.rideRepository = rideRepository;
         this.carRepository = carRepository;
+        this.subRideRepository = subRideRepository;
+        this.locationRepository = locationRepository;
+        this.userRideInfoRepository = userRideInfoRepository;
     }
 
     @Override
@@ -43,22 +46,6 @@ public class RideService implements IRideService {
             return new ArrayList<>();
         } else {
             return rides;
-        }
-    }
-
-    //create new ride attached to a user
-    @Override
-    public Ride createRide(Long userId, Ride ride) throws RideServiceException {
-        try {
-            User creator = userService.findUserById(userId);
-            ride.setCreatorDriverUsername(creator.getUsername());
-            List<SubRide> subrides = createSubRides(ride.getLocations());
-            ride.setSubRides(subrides);
-            ride.addUserRideInfo(creatorUserRideInfo(creator , ride));
-            Ride r = rideRepository.save(ride);
-            return r;
-        } catch (Exception e) {
-            throw new RideServiceException("Ride not saved");
         }
     }
 
@@ -82,30 +69,84 @@ public class RideService implements IRideService {
         }
     }
 
+    //create new ride attached to a user
     @Override
-    public Ride createRide(Ride ride) throws RideServiceException {
-        Ride r = rideRepository.save(ride);
-        if (r == null) {
+    public Ride createRide(Long userId, Ride ride) throws RideServiceException {
+        try {
+            Ride r = saveRide(ride);
+            User creator = userService.findUserById(userId);
+            r.setCreatorDriverUsername(creator.getUsername());
+            List<SubRide> subrides = createSubRides(r);
+            r.setSubRides(subrides);
+            UserRideInfo uri = creatorUserRideInfo(creator, r);
+            r.addUserRideInfo(uri);
+            creator.addUserRideInfo(uri);
+            saveRide(r);
+            saveUser(creator);
+            return r;
+        } catch (Exception e) {
             throw new RideServiceException("Ride not saved");
         }
-        return r;
     }
 
+
+    @Override
+    public Ride saveRide(Ride ride) throws RideServiceException {
+        try {
+            Ride r = rideRepository.save(ride);
+            System.out.println(r);
+            return r;
+        } catch (Exception e) {
+            throw new RideServiceException("Ride not saved");
+        }
+    }
+
+    private SubRide saveSubRide(SubRide subRide) throws RideServiceException {
+        try {
+            return subRideRepository.save(subRide);
+
+        } catch (Exception e) {
+            throw new RideServiceException("SubRide not saved");
+        }
+    }
+
+    private Location saveLocation(Location location) throws RideServiceException {
+        try {
+            return locationRepository.save(location);
+        } catch (Exception e) {
+            throw new RideServiceException("Location not saved");
+        }
+    }
+
+    private User saveUser(User user) {
+        return userService.saveUser(user);
+    }
 
     private UserRideInfo creatorUserRideInfo(User creator, Ride ride) {
-        return new UserRideInfo(true, creator, ride);
+        return userRideInfoRepository.save(new UserRideInfo(true, creator, ride));
     }
 
-    //create a list of subrides with given locations
-    private List<SubRide> createSubRides(List<Location> locations) {
+    //create a list of subrides from given locations
+    private List<SubRide> createSubRides(Ride ride) throws RideServiceException {
+        List<RideLocation> locations = ride.getLocations();
+        for (RideLocation loc : locations) {
+            loc.setRide(ride);
+            saveLocation(loc);
+        }
         List<SubRide> subRides = new ArrayList<>();
         //loop until 1 before last of locations:
         //a subride contains a begin and endlocation
         // so there is always 1 less subride then locations in the list
-        for (int i = 0; i < locations.size()-1; i++) {
+        for (int i = 0; i < locations.size() - 1; i++) {
             SubRide subRide = new SubRide();
-            subRide.setStartLocation(locations.get(i));
-            subRide.setStopLocation(locations.get(i+1));
+            subRide.setRide(ride);
+            subRideRepository.save(subRide);
+            StartLocation sl = new StartLocation(locations.get(i).getLatitude(), locations.get(i).getLongitude(), subRide);
+            locationRepository.save(sl);
+            subRide.setStartLocation(sl);
+            EndLocation el = new EndLocation(locations.get(i + 1).getLatitude(), locations.get(i + 1).getLongitude(), subRide);
+            subRide.setEndLocation(el);
+            saveSubRide(subRide);
             subRides.add(subRide);
         }
         return subRides;

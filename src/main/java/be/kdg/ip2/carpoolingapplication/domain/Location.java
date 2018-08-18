@@ -1,6 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -22,32 +23,13 @@ public class Location {
     @Column()
     private double longitude;
 
-    @OneToOne(targetEntity = SubRide.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "subRideId")
-    @JsonIgnoreProperties(value = {"startLocation", "stopLocation"})
-    private SubRide subRide;
-
-
-    @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="rideId")
-    @JsonIgnoreProperties(value = {"subRides", "userRideInfos", "rideRequests", "locations"})
-    private Ride ride;
-
     //constructors
     public Location() {
     }
 
-    public Location(double latitude, double longitude, SubRide subRide) {
+    public Location(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.subRide = subRide;
-        this.ride = subRide.getRide();
-    }
-
-    public Location(double latitude, double longitude, Ride ride) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.ride = ride;
     }
 
     //getters and setters
@@ -75,19 +57,4 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public SubRide getSubRide() {
-        return subRide;
-    }
-
-    public void setSubRide(SubRide subRide) {
-        this.subRide = subRide;
-    }
-
-    public Ride getRide() {
-        return ride;
-    }
-
-    public void setRide(Ride ride) {
-        this.ride = ride;
-    }
 }
