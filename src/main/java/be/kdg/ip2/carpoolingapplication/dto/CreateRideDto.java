@@ -1,5 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.dto;
-import be.kdg.ip2.carpoolingapplication.domain.RideType;
+import be.kdg.ip2.carpoolingapplication.domain.enums.RideType;
 
 import java.util.List;
 

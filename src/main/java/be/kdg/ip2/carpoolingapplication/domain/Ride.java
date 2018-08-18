@@ -1,4 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.domain;
+import be.kdg.ip2.carpoolingapplication.domain.enums.RideType;
+import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;

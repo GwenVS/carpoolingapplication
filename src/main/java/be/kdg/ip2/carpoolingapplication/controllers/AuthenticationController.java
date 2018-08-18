@@ -3,7 +3,7 @@ package be.kdg.ip2.carpoolingapplication.controllers;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
 import be.kdg.ip2.carpoolingapplication.security.auth.JwtAuthenticationRequest;
-import be.kdg.ip2.carpoolingapplication.services.declaration.AuthenticationHelperService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IAuthenticationHelperService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CustomAuthenticationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -25,11 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class AuthenticationController {
-    private static final Logger logger = LogManager.getLogger(UserRestController.class);
-    private final AuthenticationHelperService authenticationHelperService;
+    private static final Logger logger = LogManager.getLogger(AuthenticationController.class);
+    private final IAuthenticationHelperService authenticationHelperService;
 
     @Autowired
-    public AuthenticationController(AuthenticationHelperService authenticationHelperService) {
+    public AuthenticationController(IAuthenticationHelperService authenticationHelperService) {
         this.authenticationHelperService = authenticationHelperService;
     }
 

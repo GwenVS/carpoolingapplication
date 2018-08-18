@@ -2,6 +2,7 @@ package be.kdg.ip2.carpoolingapplication.domain.user;
 
 import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
+import be.kdg.ip2.carpoolingapplication.domain.enums.Gender;
 import be.kdg.ip2.carpoolingapplication.dto.UpdateUserDto;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import org.hibernate.annotations.Fetch;

@@ -1,5 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.dto;
-import be.kdg.ip2.carpoolingapplication.domain.user.Gender;
+import be.kdg.ip2.carpoolingapplication.domain.enums.Gender;
 import java.time.LocalDate;
 
 public class UpdateUserDto {

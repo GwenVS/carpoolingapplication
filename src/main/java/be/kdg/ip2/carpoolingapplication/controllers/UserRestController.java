@@ -3,9 +3,9 @@ package be.kdg.ip2.carpoolingapplication.controllers;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.dto.RequestUserDto;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
-import be.kdg.ip2.carpoolingapplication.services.declaration.AuthenticationHelperService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IAuthenticationHelperService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IDtoConversionService;
-import be.kdg.ip2.carpoolingapplication.services.declaration.UserService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class UserRestController {
     private static final Logger logger = LogManager.getLogger(UserRestController.class);
-    private final UserService userService;
-    private final AuthenticationHelperService authenticationHelperService;
+    private final IUserService userService;
+    private final IAuthenticationHelperService authenticationHelperService;
     private final IDtoConversionService dtoConversionService;
 
     @Autowired
-    public UserRestController(UserService userService, AuthenticationHelperService authenticationHelperService, IDtoConversionService dtoConversionService) {
+    public UserRestController(IUserService userService, IAuthenticationHelperService authenticationHelperService, IDtoConversionService dtoConversionService) {
         this.userService = userService;
         this.authenticationHelperService = authenticationHelperService;
         this.dtoConversionService = dtoConversionService;

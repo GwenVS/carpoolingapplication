@@ -1,5 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
+import be.kdg.ip2.carpoolingapplication.domain.locations.EndLocation;
+import be.kdg.ip2.carpoolingapplication.domain.locations.StartLocation;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

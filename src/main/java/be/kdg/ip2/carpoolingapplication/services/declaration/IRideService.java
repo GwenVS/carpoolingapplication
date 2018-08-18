@@ -1,8 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.services.declaration;
 
-import be.kdg.ip2.carpoolingapplication.domain.Location;
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
-import be.kdg.ip2.carpoolingapplication.domain.SubRide;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 
 import java.time.LocalDateTime;

@@ -1,12 +1,13 @@
 package be.kdg.ip2.carpoolingapplication.configuration.other;
 
 import be.kdg.ip2.carpoolingapplication.domain.*;
+import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
-import be.kdg.ip2.carpoolingapplication.services.declaration.UserService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 import be.kdg.ip2.carpoolingapplication.services.implementation.CustomUserDetailsService;
-import be.kdg.ip2.carpoolingapplication.domain.user.Gender;
+import be.kdg.ip2.carpoolingapplication.domain.enums.Gender;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -26,11 +27,11 @@ import java.util.List;
 public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
 
     private CustomUserDetailsService customUserDetailsService;
-    private UserService userService;
+    private IUserService userService;
     private IRideService rideService;
 
     @Autowired
-    public DataLoader(CustomUserDetailsService customUserDetailsService, UserService userService, IRideService rideService) {
+    public DataLoader(CustomUserDetailsService customUserDetailsService, IUserService userService, IRideService rideService) {
         this.customUserDetailsService = customUserDetailsService;
         this.userService = userService;
         this.rideService = rideService;

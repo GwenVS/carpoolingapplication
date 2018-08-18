@@ -1,9 +1,11 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
-import be.kdg.ip2.carpoolingapplication.services.declaration.AuthenticationHelperService;
-import be.kdg.ip2.carpoolingapplication.services.declaration.StorageService;
-import be.kdg.ip2.carpoolingapplication.services.declaration.UserService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IAuthenticationHelperService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IStorageService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -25,13 +27,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class FileRestController implements HandlerExceptionResolver{
-
-    private final UserService userService;
-    private final AuthenticationHelperService authenticationHelperService;
-    private final StorageService storageService;
+    private static final Logger logger = LogManager.getLogger(FileRestController.class);
+    private final IUserService userService;
+    private final IAuthenticationHelperService authenticationHelperService;
+    private final IStorageService storageService;
 
     @Autowired
-    public FileRestController(UserService userService, AuthenticationHelperService authenticationHelperService, StorageService storageService) {
+    public FileRestController(IUserService userService, IAuthenticationHelperService authenticationHelperService, IStorageService storageService) {
         this.userService = userService;
         this.authenticationHelperService = authenticationHelperService;
         this.storageService = storageService;
