@@ -43,7 +43,7 @@ public class RideController {
         try {
             Ride ride1 = rideService.createRide(userId, dtoConversionService.createRideDtoToRide(createRideDto));
             logger.info("@RidesController: new ride created.");
-            return ResponseEntity.ok(ride1);
+            return ResponseEntity.ok(ride1); //todo dtoConversionService.RideToCreateRideDto(ride1);
         } catch (RideServiceException e) {
             logger.error("@RidesController: error while creating new ride: " + createRideDto.toString() + "error: " + e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body("RideServiceException: " + e.getMessage());
