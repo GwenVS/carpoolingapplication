@@ -1,6 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.services.implementation;
 
-import be.kdg.ip2.carpoolingapplication.configuration.other.DeviceProvider;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
@@ -31,23 +30,17 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthenticationHelperService implements IAuthenticationHelperService {
 
     private IUserService userService;
-
     private TokenHelper tokenHelper;
-
     private AuthenticationManager authenticationManager;
-
     private CustomUserDetailsService userDetailsService;
-
-    private DeviceProvider deviceProvider;
 
 
     @Autowired
-    public AuthenticationHelperService(IUserService userService, TokenHelper tokenHelper, AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, DeviceProvider deviceProvider) {
+    public AuthenticationHelperService(IUserService userService, TokenHelper tokenHelper, AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService) {
         this.userService = userService;
         this.tokenHelper = tokenHelper;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
-        this.deviceProvider = deviceProvider;
     }
 
     @Override
@@ -171,9 +164,5 @@ public class AuthenticationHelperService implements IAuthenticationHelperService
 
     public void setUserDetailsService(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-    }
-
-    public void setDeviceProvider(DeviceProvider deviceProvider) {
-        this.deviceProvider = deviceProvider;
     }
 }

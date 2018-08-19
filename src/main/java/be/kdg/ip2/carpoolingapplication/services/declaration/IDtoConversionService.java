@@ -1,11 +1,9 @@
 package be.kdg.ip2.carpoolingapplication.services.declaration;
 
+import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
-import be.kdg.ip2.carpoolingapplication.dto.CreateRideDto;
-import be.kdg.ip2.carpoolingapplication.dto.RequestUserDto;
-import be.kdg.ip2.carpoolingapplication.dto.UpdateUserDto;
-import be.kdg.ip2.carpoolingapplication.dto.UserDto;
+import be.kdg.ip2.carpoolingapplication.dto.*;
 
 public interface IDtoConversionService {
     UserDto convertUserToUserDto(User user);
@@ -20,4 +18,10 @@ public interface IDtoConversionService {
     User convertUpdateUserDtoToUser(UpdateUserDto updateUserDto);
 
     Ride createRideDtoToRide(CreateRideDto createRideDto);
+
+    CreateRideDto rideToCreateRideDto(Ride ride);
+
+    CarDto carToCarDto(Car car);
+
+    GetRideDto rideToGetRideDto(Ride ride);
 }

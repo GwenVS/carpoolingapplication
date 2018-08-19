@@ -2,6 +2,7 @@ package be.kdg.ip2.carpoolingapplication.controllers;
 
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.dto.CreateRideDto;
+import be.kdg.ip2.carpoolingapplication.dto.GetRideDto;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IDtoConversionService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
@@ -29,6 +30,8 @@ public class RideController {
         this.dtoConversionService = dtoConversionService;
     }
 
+
+    //todo: dto
     @GetMapping("/api/public/rides")
     public List<Ride> getAllRides() {
         logger.info("@RidesController: searching all rides.");
@@ -41,9 +44,10 @@ public class RideController {
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity createRide(@PathVariable("user_id") long userId, @RequestBody CreateRideDto createRideDto) {
         try {
-            Ride ride1 = rideService.createRide(userId, dtoConversionService.createRideDtoToRide(createRideDto));
+            Ride ride = rideService.createRide(userId, dtoConversionService.createRideDtoToRide(createRideDto));
+            GetRideDto createdRide = dtoConversionService.rideToGetRideDto(ride);
             logger.info("@RidesController: new ride created.");
-            return ResponseEntity.ok(ride1); //todo dtoConversionService.RideToCreateRideDto(ride1);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdRide);
         } catch (RideServiceException e) {
             logger.error("@RidesController: error while creating new ride: " + createRideDto.toString() + "error: " + e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body("RideServiceException: " + e.getMessage());
@@ -53,6 +57,7 @@ public class RideController {
     }
 
 
+    //todo: dto
     @GetMapping("/api/public/rides/{ride_id}")
     public ResponseEntity get(@PathVariable("ride_id") long rideId) {
         try {

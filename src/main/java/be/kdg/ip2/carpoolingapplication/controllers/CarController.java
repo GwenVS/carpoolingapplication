@@ -1,7 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
-
-
-import be.kdg.ip2.carpoolingapplication.domain.Car;
+import be.kdg.ip2.carpoolingapplication.dto.CarDto;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IDtoConversionService;
 import org.apache.log4j.LogManager;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,12 +28,16 @@ public class CarController {
     }
 
     @GetMapping("api/public/cars/user/{username}")
-    public List<Car> getAllCarsByUser(@PathVariable("username") String username){
-        return carService.getCarsByUsername(username);
+    public List<CarDto> getAllCarsByUser(@PathVariable("username") String username){
+        List<CarDto> carsofUser = new ArrayList<>();
+        for(int i=0;i<carService.getCarsByUsername(username).size();i++){
+            carsofUser.add(dtoConversionService.carToCarDto(carService.getCarsByUsername(username).get(i)));
+        }
+        return carsofUser;
     }
 
     @GetMapping("api/public/cars/{car_id}")
-    public Car getCarById(@PathVariable("car_id") Long carId){
-        return carService.getCarById(carId);
+    public CarDto getCarById(@PathVariable("car_id") Long carId){
+        return dtoConversionService.carToCarDto(carService.getCarById(carId));
     }
 }

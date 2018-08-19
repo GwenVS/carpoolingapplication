@@ -199,6 +199,8 @@ public class Ride {
                 ", departureTimeOutwardJourney=" + departureTimeOutwardJourney +
                 ", departureTimeReturnTrip=" + departureTimeReturnTrip +
                 ", rideType=" + rideType +
+                ", CreatorDriverUsername='" + CreatorDriverUsername + '\'' +
+                ", carId=" + carId +
                 '}';
     }
 }
