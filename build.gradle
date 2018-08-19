@@ -52,8 +52,8 @@ dependencies {
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
     runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
 }
 compileJava {

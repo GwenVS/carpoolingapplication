@@ -56,7 +56,7 @@ public class RideController {
     @GetMapping("/api/public/rides/{ride_id}")
     public ResponseEntity get(@PathVariable("ride_id") long rideId) {
         try {
-            Ride ride = rideService.getRide(rideId);
+            Ride ride = rideService.getRideById(rideId);
             return ResponseEntity.ok(ride);
         } catch (RideServiceException e) {
             logger.error("@RidesController: error while getting ride: rideId: " + rideId, e);

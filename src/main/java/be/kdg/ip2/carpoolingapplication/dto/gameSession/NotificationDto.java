@@ -1,6 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.dto.gameSession;
 
-import be.kdg.ip2.carpoolingapplication.domain.Notification;
+import be.kdg.ip2.carpoolingapplication.domain.enums.Notification;
 
 import java.util.List;
 

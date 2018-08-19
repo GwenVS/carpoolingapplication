@@ -12,7 +12,7 @@ public interface IRideService {
     //create new ride attached to a user
     Ride createRide(Long userId, Ride ride) throws RideServiceException;
 
-    Ride getRide(long rideId) throws RideServiceException;
+    Ride getRideById(long rideId) throws RideServiceException;
 
     List<Ride> getRidesByDepartureTime(LocalDateTime minDepartureTime, LocalDateTime maxDepartureTime);
 

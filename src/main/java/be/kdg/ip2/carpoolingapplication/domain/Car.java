@@ -1,7 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -13,7 +12,7 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator= ObjectIdGenerators.UUIDGenerator.class, property="@carId")
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long carId;
 
     @Column(length = 50)

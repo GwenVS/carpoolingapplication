@@ -27,17 +27,17 @@ public class RideService implements IRideService {
 
     private IUserService userService;
     private RideRepository rideRepository;
-    private CarRepository carRepository;
+    private CarService carService;
     private SubRideRepository subRideRepository;
     private LocationRepository locationRepository;
     private UserRideInfoRepository userRideInfoRepository;
 
 
     @Autowired
-    public RideService(IUserService userService, RideRepository rideRepository, CarRepository carRepository, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
+    public RideService(IUserService userService, RideRepository rideRepository, CarService carService, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
         this.userService = userService;
         this.rideRepository = rideRepository;
-        this.carRepository = carRepository;
+        this.carService = carService;
         this.subRideRepository = subRideRepository;
         this.locationRepository = locationRepository;
         this.userRideInfoRepository = userRideInfoRepository;
@@ -54,7 +54,7 @@ public class RideService implements IRideService {
     }
 
     @Override
-    public Ride getRide(long rideId) throws RideServiceException {
+    public Ride getRideById(long rideId) throws RideServiceException {
         Ride ride = rideRepository.getOne(rideId);
         if (ride == null) {
             throw new RideServiceException("Ride not found");
@@ -108,7 +108,6 @@ public class RideService implements IRideService {
     private SubRide saveSubRide(SubRide subRide) throws RideServiceException {
         try {
             return subRideRepository.save(subRide);
-
         } catch (Exception e) {
             throw new RideServiceException("SubRide not saved");
         }

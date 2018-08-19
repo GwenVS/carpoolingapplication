@@ -20,7 +20,7 @@ import javax.persistence.*;
 public class UserRideInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userRideInfoId;
 
     @Column()

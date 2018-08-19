@@ -51,12 +51,11 @@ public class UserRestController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity getAllUsersLimited(HttpServletRequest request){
         List<User> users = userService.findUsers();
-
         List<RequestUserDto> userDtos = new ArrayList<>();
         for(User user : users){
             userDtos.add(dtoConversionService.convertUserToRequestUserDto(user));
         }
-
+        logger.info("@UserRestController: searching all userinfo.");
         return ResponseEntity.ok(userDtos);
     }
 
@@ -69,11 +68,14 @@ public class UserRestController {
         if (requestUser != null) username = requestUser.getUsername();
 
         if (!authenticationHelperService.userIsAllowedToAccessResource(request, username)){
+            logger.info("@UserRestController: unauthorized request for user " + username);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         };
         if(requestUser == null){
+            logger.error("@UserRestController: user not found.");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
+        logger.info("@UserRestController: user found.");
         return ResponseEntity.ok().body(dtoConversionService.convertUserToRequestUserDto(requestUser));
     }
 

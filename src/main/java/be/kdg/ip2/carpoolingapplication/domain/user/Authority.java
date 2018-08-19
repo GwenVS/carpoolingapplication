@@ -23,7 +23,6 @@ public class Authority implements GrantedAuthority{
 
     @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
-    //@JsonIgnoreProperties(value = {"userId", "authorities", "cars", "userRideInfos", "rideRequests"})
     @JoinColumn(name="userId")
     private User user;
 

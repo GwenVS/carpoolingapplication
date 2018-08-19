@@ -14,7 +14,7 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator= ObjectIdGenerators.UUIDGenerator.class, property="@rideRequestId")
 public class RideRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rideRequestId;
 
     @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER)

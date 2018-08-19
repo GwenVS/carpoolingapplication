@@ -19,7 +19,7 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@rideId")
 public class Ride {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rideId;
 
     @Column(nullable = false)
