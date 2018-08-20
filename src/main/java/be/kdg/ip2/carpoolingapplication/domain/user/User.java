@@ -3,7 +3,6 @@ package be.kdg.ip2.carpoolingapplication.domain.user;
 import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.domain.enums.Gender;
-import be.kdg.ip2.carpoolingapplication.dto.UpdateUserDto;
 import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
@@ -85,14 +84,6 @@ public class User implements UserDetails {
         this.birthday = userDto.getBirthday();
         this.gender = userDto.getGender();
         this.encryptedPassword = userDto.getPassword();
-    }
-
-    public User(UpdateUserDto updateuserDto){
-        this.firstName = updateuserDto.getFirstName();
-        this.lastName = updateuserDto.getLastName();
-        this.encryptedPassword = updateuserDto.getPassword();
-        this.gender = updateuserDto.getGender();
-        this.birthday = updateuserDto.getBirthday();
     }
 
     public User(String firstName, String lastName, String username, String email, LocalDate birthday, String encryptedPassword, Gender gender, List<Authority> authorities) {
