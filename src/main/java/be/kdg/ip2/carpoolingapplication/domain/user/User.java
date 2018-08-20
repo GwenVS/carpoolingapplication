@@ -3,6 +3,7 @@ package be.kdg.ip2.carpoolingapplication.domain.user;
 import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.domain.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +39,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @Column
+    @Column()
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @Column(nullable = false)
