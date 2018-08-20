@@ -3,7 +3,6 @@ package be.kdg.ip2.carpoolingapplication.domain.user;
 import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.domain.enums.Gender;
-import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +42,7 @@ public class User implements UserDetails {
     private LocalDate birthday;
 
     @Column(nullable = false)
-    private String encryptedPassword;
+    private String password;
 
     @Column(nullable = false)
     private Gender gender;
@@ -76,23 +75,13 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(UserDto userDto){
-        this.firstName = userDto.getFirstName();
-        this.lastName = userDto.getLastName();
-        this.username = userDto.getUsername();
-        this.email = userDto.getEmail();
-        this.birthday = userDto.getBirthday();
-        this.gender = userDto.getGender();
-        this.encryptedPassword = userDto.getPassword();
-    }
-
-    public User(String firstName, String lastName, String username, String email, LocalDate birthday, String encryptedPassword, Gender gender, List<Authority> authorities) {
+    public User(String firstName, String lastName, String username, String email, LocalDate birthday, String password, Gender gender, List<Authority> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.birthday = birthday;
-        this.encryptedPassword = encryptedPassword;
+        this.password = password;
         this.gender = gender;
         this.authorities = authorities;
     }
@@ -124,11 +113,11 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.encryptedPassword;
+        return this.password;
     }
 
-    public String getEncryptedPassword() {
-        return this.encryptedPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getUserId() {
@@ -169,10 +158,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setEncryptedPassword(String password) {
-        this.encryptedPassword = password;
     }
 
     public Gender getGender() {

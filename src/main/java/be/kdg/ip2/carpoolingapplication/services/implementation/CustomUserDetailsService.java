@@ -4,8 +4,6 @@ import be.kdg.ip2.carpoolingapplication.domain.user.Authority;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.repository.declaration.UserRepository;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.UserServiceException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,14 +64,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         User user = (User) loadUserByUsername(username);
 
-        user.setEncryptedPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
     }
 
     public boolean checkLogin(String username, String password) throws UserServiceException {
         User u = userRepository.findUserByUsername(username);
-        if(u == null || !passwordEncoder.matches(password, u.getEncryptedPassword())){
+        if(u == null || !passwordEncoder.matches(password, u.getPassword())){
             return false;
         }
         return true;
@@ -90,7 +88,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Authority authority = new Authority();
         authority.setName("ROLE_USER");
         authority.setUser(user);
-        user.setEncryptedPassword(passwordEncoder.encode(user.getEncryptedPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAuthorities(Arrays.asList(authority));
         return this.saveUser(user);
     }

@@ -2,7 +2,6 @@ package be.kdg.ip2.carpoolingapplication.services.declaration;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
-import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import be.kdg.ip2.carpoolingapplication.security.auth.JwtAuthenticationRequest;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CustomAuthenticationException;
 import org.springframework.mobile.device.Device;
@@ -22,5 +21,5 @@ public interface IAuthenticationHelperService {
 
     boolean checkEmailCredentials(String email);
 
-    boolean register(UserDto userDto) throws CustomAuthenticationException;
+    boolean register(User user) throws CustomAuthenticationException;
 }

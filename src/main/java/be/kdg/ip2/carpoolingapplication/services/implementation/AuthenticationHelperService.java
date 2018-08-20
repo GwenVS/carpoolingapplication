@@ -2,7 +2,6 @@ package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
-import be.kdg.ip2.carpoolingapplication.dto.UserDto;
 import be.kdg.ip2.carpoolingapplication.security.auth.JwtAuthenticationRequest;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CustomAuthenticationException;
 import be.kdg.ip2.carpoolingapplication.security.TokenHelper;
@@ -89,10 +88,10 @@ public class AuthenticationHelperService implements IAuthenticationHelperService
     }
 
     @Override
-    public boolean register(UserDto userDto){
+    public boolean register(User user){
         //Check if username or email are already used
-        boolean usernameGood = this.checkUsernameCredentials(userDto.getUsername());
-        boolean emailGood = this.checkEmailCredentials(userDto.getEmail());
+        boolean usernameGood = this.checkUsernameCredentials(user.getUsername());
+        boolean emailGood = this.checkEmailCredentials(user.getEmail());
 
         if(!usernameGood && !emailGood){
             throw new CustomAuthenticationException("Username and email already used!");
@@ -104,7 +103,6 @@ public class AuthenticationHelperService implements IAuthenticationHelperService
             throw new CustomAuthenticationException("Email is already used!");
         }
         else{
-            User user = new User(userDto);
             userDetailsService.addUser(user);
             return true;
         }

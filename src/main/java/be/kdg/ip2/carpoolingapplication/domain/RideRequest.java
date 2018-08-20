@@ -10,20 +10,20 @@ import javax.persistence.*;
 
 @Entity
 @Table()
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-@JsonIdentityInfo(generator= ObjectIdGenerators.UUIDGenerator.class, property="@rideRequestId")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@rideRequestId")
 public class RideRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rideRequestId;
 
-    @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER)
-    @JoinColumn(name="userId")
-    @JsonIgnoreProperties(value = {"userId","encryptedPassword", "profilePictureFileName","enabled","password","credentialsNonExpired", "accountNonExpired", "accountNonLocked","authorities", "userRoles", "cars", "userRideInfos", "rideRequests"})
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
+    @JsonIgnoreProperties(value = {"userId", "profilePictureFileName", "enabled", "password", "credentialsNonExpired", "accountNonExpired", "accountNonLocked", "authorities", "userRoles", "cars", "userRideInfos", "rideRequests"})
     private User user;
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="rideId")
+    @JoinColumn(name = "rideId")
     @JsonIgnoreProperties(value = {"subRides", "userRideInfos", "rideRequests", "locations"})
     private Ride ride;
 

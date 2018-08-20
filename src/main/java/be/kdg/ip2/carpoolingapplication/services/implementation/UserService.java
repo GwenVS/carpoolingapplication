@@ -83,7 +83,7 @@ public class UserService implements IUserService {
     //IMPORTANT ONLY USE THIS METHOD IF YOU WANT TO ALSO UPDATE THE PASSWORD!!!
     @Override
     public User updateUser(Long userId, User user) throws UserServiceException {
-        user.setEncryptedPassword(passwordEncoder.encode(user.getEncryptedPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.saveUser(user);
     }
 
@@ -95,7 +95,7 @@ public class UserService implements IUserService {
     @Override
     public User addUser(User user) throws UserServiceException {
         Authority authority = new Authority();
-        user.setEncryptedPassword(passwordEncoder.encode(user.getEncryptedPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAuthorities(Arrays.asList(authority));
         authority.setUser(user);
         return this.saveUser(user);
@@ -113,7 +113,7 @@ public class UserService implements IUserService {
     @Override
     public void checkLogin(Long userId, String currentPassword) throws UserServiceException {
         User u = userRepository.findOne(userId);
-        if (u == null || !passwordEncoder.matches(currentPassword, u.getEncryptedPassword())) {
+        if (u == null || !passwordEncoder.matches(currentPassword, u.getPassword())) {
             throw new UserServiceException(("Username or password are wrong for user " + userId));
         }
     }
@@ -122,7 +122,7 @@ public class UserService implements IUserService {
     public void updatePassword(Long userId, String oldPassword, String newPassword) throws UserServiceException {
         User u = userRepository.findOne(userId);
         checkLogin(userId, oldPassword);
-        u.setEncryptedPassword(passwordEncoder.encode(newPassword));
+        u.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(u);
     }
 

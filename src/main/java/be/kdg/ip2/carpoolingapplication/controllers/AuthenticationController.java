@@ -1,6 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 
-import be.kdg.ip2.carpoolingapplication.dto.UserDto;
+import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
 import be.kdg.ip2.carpoolingapplication.security.auth.JwtAuthenticationRequest;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IAuthenticationHelperService;
@@ -44,9 +44,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/api/public/register")
-    public ResponseEntity register(@RequestBody UserDto userDto){
+    public ResponseEntity register(@RequestBody User user){
         try{
-            authenticationHelperService.register(userDto);
+            authenticationHelperService.register(user);
             return ResponseEntity.ok().build();
         }catch (CustomAuthenticationException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
