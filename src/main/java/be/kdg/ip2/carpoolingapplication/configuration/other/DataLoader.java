@@ -71,7 +71,7 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         ride1.addRideRequest(rideRequest1);
         carpooler_M_NS_1.addRideRequest(rideRequest1);
         try {
-            this.rideService.createRide(carpooler_M_S_1.getUserId(),ride1);
+            this.rideService.createRide(carpooler_M_S_1.getUsername(),ride1);
         } catch (RideServiceException e) {
             System.out.println("@DataLoader: if this goes wrong, i dunno anymore xD");
         }

@@ -25,8 +25,6 @@ public class RideController {
         this.rideService = rideService;
     }
 
-
-    //todo: dto
     @GetMapping("/api/public/rides")
     public List<Ride> getAllRides() {
         logger.info("@RidesController: searching all rides.");
@@ -34,12 +32,12 @@ public class RideController {
     }
 
     //create new ride
-    @PostMapping(("/api/public/rides/{user_id}"))
+    @PostMapping(("/api/public/rides/{username}"))
     //@PostMapping(("/api/private/rides/{user_id}"))
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity createRide(@PathVariable("user_id") long userId, @RequestBody Ride ride) {
+    public ResponseEntity createRide(@PathVariable("username") String username, @RequestBody Ride ride) {
         try {
-            Ride createdRide = rideService.createRide(userId, ride);
+            Ride createdRide = rideService.createRide(username, ride);
             logger.info("@RidesController: new ride created.");
             return ResponseEntity.status(HttpStatus.CREATED).body(createdRide);
         } catch (RideServiceException e) {
@@ -50,8 +48,6 @@ public class RideController {
         }
     }
 
-
-    //todo: dto
     @GetMapping("/api/public/rides/{ride_id}")
     public ResponseEntity get(@PathVariable("ride_id") long rideId) {
         try {

@@ -75,10 +75,10 @@ public class RideService implements IRideService {
 
     //create new ride attached to a user
     @Override
-    public Ride createRide(Long userId, Ride ride) throws RideServiceException {
+    public Ride createRide(String username, Ride ride) throws RideServiceException {
         try {
             Ride r = saveRide(ride);
-            User creator = userService.findUserById(userId);
+            User creator = userService.findUserByUsername(username);
             r.setCreatorDriverUsername(creator.getUsername());
             List<SubRide> subrides = createSubRides(r);
             r.setSubRides(subrides);
