@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@locationId")
-public class Location {
+public class Location { //todo: abstracte klasse?
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -52,6 +52,7 @@ public class Ride {
     @Column
     @OneToMany(mappedBy = "ride", targetEntity = RideRequest.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    @JsonIgnoreProperties("ride")
     private List<RideRequest> rideRequests = new ArrayList<>();
 
     @Column

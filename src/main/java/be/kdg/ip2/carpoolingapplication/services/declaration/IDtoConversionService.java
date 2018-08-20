@@ -17,11 +17,11 @@ public interface IDtoConversionService {
 
     User convertUpdateUserDtoToUser(UpdateUserDto updateUserDto);
 
-    Ride createRideDtoToRide(CreateRideDto createRideDto);
+    /*Ride createRideDtoToRide(CreateRideDto createRideDto);
 
     CreateRideDto rideToCreateRideDto(Ride ride);
 
     CarDto carToCarDto(Car car);
 
-    GetRideDto rideToGetRideDto(Ride ride);
+    GetRideDto rideToGetRideDto(Ride ride);*/
 }

@@ -80,7 +80,7 @@ public class DtoConversionService implements IDtoConversionService {
         }
     }
 
-    @Override
+/*    @Override
     public Ride createRideDtoToRide(CreateRideDto createRideDto) throws ConversionException{
         try {
             Ride ride = modelMapper.map(createRideDto, Ride.class);
@@ -122,7 +122,7 @@ public class DtoConversionService implements IDtoConversionService {
             throw new ConversionException("@DtoConversionService: unable to convert Car to CarDto: " + e.getMessage());
         }
     }
-
+*/
     private LocalDate stringToLocalDate(String localDateString) throws ConversionException{
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try{

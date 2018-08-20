@@ -26,7 +26,7 @@ public class Car {
 
     @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
-    @JsonIgnoreProperties(value = {"userId", "authorities", "cars", "userRideInfos", "rideRequests"})
+    @JsonIgnoreProperties(value = {"userId","encryptedPassword", "profilePictureFileName","enabled","password","credentialsNonExpired", "accountNonExpired", "accountNonLocked","userRoles","authorities", "cars", "userRideInfos", "rideRequests"})
     private User user;
 
 

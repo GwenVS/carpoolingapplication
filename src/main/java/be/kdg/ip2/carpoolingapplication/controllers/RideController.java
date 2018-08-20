@@ -1,9 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
-import be.kdg.ip2.carpoolingapplication.dto.CreateRideDto;
-import be.kdg.ip2.carpoolingapplication.dto.GetRideDto;
-import be.kdg.ip2.carpoolingapplication.services.declaration.IDtoConversionService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 import org.apache.log4j.LogManager;
@@ -22,12 +19,10 @@ public class RideController {
     private static final Logger logger = LogManager.getLogger(RideController.class);
 
     private IRideService rideService;
-    private IDtoConversionService dtoConversionService;
 
     @Autowired
-    public RideController(IRideService rideService, IDtoConversionService dtoConversionService) {
+    public RideController(IRideService rideService) {
         this.rideService = rideService;
-        this.dtoConversionService = dtoConversionService;
     }
 
 
@@ -42,14 +37,13 @@ public class RideController {
     @PostMapping(("/api/public/rides/{user_id}"))
     //@PostMapping(("/api/private/rides/{user_id}"))
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity createRide(@PathVariable("user_id") long userId, @RequestBody CreateRideDto createRideDto) {
+    public ResponseEntity createRide(@PathVariable("user_id") long userId, @RequestBody Ride ride) {
         try {
-            Ride ride = rideService.createRide(userId, dtoConversionService.createRideDtoToRide(createRideDto));
-            GetRideDto createdRide = dtoConversionService.rideToGetRideDto(ride);
+            Ride createdRide = rideService.createRide(userId, ride);
             logger.info("@RidesController: new ride created.");
             return ResponseEntity.status(HttpStatus.CREATED).body(createdRide);
         } catch (RideServiceException e) {
-            logger.error("@RidesController: error while creating new ride: " + createRideDto.toString() + "error: " + e.getMessage(), e);
+            logger.error("@RidesController: error while creating new ride: " + ride.toString() + "error: " + e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body("RideServiceException: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while creating your ride. Try again later");
