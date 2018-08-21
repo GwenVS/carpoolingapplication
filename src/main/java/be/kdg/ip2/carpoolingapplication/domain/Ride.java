@@ -23,11 +23,11 @@ public class Ride {
     private Long rideId;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime departureTimeOutwardJourney;
 
     @Column()
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime departureTimeReturnTrip;
 
     @Column(nullable = false)
