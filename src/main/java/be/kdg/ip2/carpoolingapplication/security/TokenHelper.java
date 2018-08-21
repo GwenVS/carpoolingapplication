@@ -30,9 +30,6 @@ public class TokenHelper {
     @Value("${jwt.expires_in}")
     private int EXPIRES_IN;
 
-    @Value("${jwt.mobile_expires_in}")
-    private int MOBILE_EXPIRES_IN;
-
     @Value("${jwt.header}")
     private String AUTH_HEADER;
 
@@ -66,34 +63,6 @@ public class TokenHelper {
         return issueAt;
     }
 
-    public String getAudienceFromToken(String token) {
-        String audience;
-        try {
-            final Claims claims = this.getAllClaimsFromToken(token);
-            audience = claims.getAudience();
-        } catch (Exception e) {
-            audience = null;
-        }
-        return audience;
-    }
-
-    public String refreshToken(String token, Device device) {
-        String refreshedToken;
-        Date a = new Date();
-        try {
-            final Claims claims = this.getAllClaimsFromToken(token);
-            claims.setIssuedAt(a);
-            refreshedToken = Jwts.builder()
-                    .setClaims(claims)
-                    .setExpiration(generateExpirationDate(device))
-                    .signWith( SIGNATURE_ALGORITHM, SECRET )
-                    .compact();
-        } catch (Exception e) {
-            refreshedToken = null;
-        }
-        return refreshedToken;
-    }
-
     public String generateToken(String username, Device device, String claims) {
         String audience = generateAudience(device);
         return Jwts.builder()
@@ -101,7 +70,7 @@ public class TokenHelper {
                 .setSubject(username)
                 .setAudience(audience)
                 .setIssuedAt(new Date())
-                .setExpiration(generateExpirationDate(device))
+                .setExpiration(generateExpirationDate())
                 .claim("roles", claims)
                 .signWith( SIGNATURE_ALGORITHM, SECRET )
                 .compact();
@@ -132,13 +101,13 @@ public class TokenHelper {
         return claims;
     }
 
-    private Date generateExpirationDate(Device device) {
-        long expiresIn = device.isTablet() || device.isMobile() ? MOBILE_EXPIRES_IN : EXPIRES_IN;
+    private Date generateExpirationDate() {
+        long expiresIn = EXPIRES_IN;
         return new Date(new Date().getTime() + expiresIn * 1000);
     }
 
-    public int getExpiredIn(Device device) {
-        return device.isMobile() || device.isTablet() ? MOBILE_EXPIRES_IN : EXPIRES_IN;
+    public int getExpiredIn() {
+        return EXPIRES_IN;
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
@@ -151,21 +120,14 @@ public class TokenHelper {
         );
     }
 
-    private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
-        return (lastPasswordReset != null && created.before(lastPasswordReset));
-    }
-
     public String getToken( HttpServletRequest request ) {
         // Getting the token from Authentication header --> "Authorization": "Bearer your_token"
-
         Enumeration<String> names = request.getHeaderNames();
-
         String authHeader = getAuthHeaderFromHeader( request );
         if ( authHeader != null && authHeader.startsWith("Bearer ")) {
             //Remove the "Bearer" part and return only the actual token string
             return authHeader.substring(7);
         }
-
         return null;
     }
 

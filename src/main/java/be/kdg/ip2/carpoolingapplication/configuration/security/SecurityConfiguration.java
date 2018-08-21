@@ -2,8 +2,8 @@ package be.kdg.ip2.carpoolingapplication.configuration.security;
 
 import be.kdg.ip2.carpoolingapplication.services.implementation.CustomUserDetailsService;
 import be.kdg.ip2.carpoolingapplication.security.TokenHelper;
-import be.kdg.ip2.carpoolingapplication.security.auth.RestAuthenticationEntryPoint;
-import be.kdg.ip2.carpoolingapplication.security.auth.TokenAuthenticationFilter;
+import be.kdg.ip2.carpoolingapplication.security.RestAuthenticationEntryPoint;
+import be.kdg.ip2.carpoolingapplication.security.TokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package be.kdg.ip2.carpoolingapplication.security.auth;
+package be.kdg.ip2.carpoolingapplication.security;
 
 /**
  * Wrapper class for authentication requests
@@ -8,15 +8,6 @@ package be.kdg.ip2.carpoolingapplication.security.auth;
 public class JwtAuthenticationRequest {
     private String username;
     private String password;
-
-    public JwtAuthenticationRequest() {
-        super();
-    }
-
-    public JwtAuthenticationRequest(String username, String password) {
-        this.setUsername(username);
-        this.setPassword(password);
-    }
 
     public String getUsername() {
         return this.username;

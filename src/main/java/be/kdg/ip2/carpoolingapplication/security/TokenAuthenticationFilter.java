@@ -1,9 +1,6 @@
-package be.kdg.ip2.carpoolingapplication.security.auth;
+package be.kdg.ip2.carpoolingapplication.security;
 
-import be.kdg.ip2.carpoolingapplication.security.TokenHelper;
 import io.jsonwebtoken.Claims;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +39,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain chain
     ) throws IOException, ServletException {
-
         String username;
         String authToken = tokenHelper.getToken(request);
 

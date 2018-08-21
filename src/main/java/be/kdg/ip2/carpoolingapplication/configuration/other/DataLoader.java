@@ -40,7 +40,8 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        User carpooler_M_S_1 =this.customUserDetailsService.addUser( new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>()));
+        User carpooler_M_S_1 =new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>());
+        this.customUserDetailsService.addUser(carpooler_M_S_1);
         carpooler_M_S_1.addCar(new Car("Daihatsu terios", 8.5, 3, carpooler_M_S_1));
         carpooler_M_S_1.addCar(new Car("citroën DS4", 6.2, 2, carpooler_M_S_1));
         userService.saveUser(carpooler_M_S_1);

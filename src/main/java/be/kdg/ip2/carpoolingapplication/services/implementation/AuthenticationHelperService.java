@@ -2,7 +2,7 @@ package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
-import be.kdg.ip2.carpoolingapplication.security.auth.JwtAuthenticationRequest;
+import be.kdg.ip2.carpoolingapplication.security.JwtAuthenticationRequest;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CustomAuthenticationException;
 import be.kdg.ip2.carpoolingapplication.security.TokenHelper;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IAuthenticationHelperService;
@@ -66,7 +66,7 @@ public class AuthenticationHelperService implements IAuthenticationHelperService
 
             //Generate a token for a user
             String jws = tokenHelper.generateToken(user.getUsername(), device, roles.toString());
-            int expiresIn = tokenHelper.getExpiredIn(device);
+            int expiresIn = tokenHelper.getExpiredIn();
 
             //Wrap the state of the token in custom wrapper clas
             return new UserTokenState(jws, expiresIn);

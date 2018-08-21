@@ -1,4 +1,4 @@
-package be.kdg.ip2.carpoolingapplication.security.auth;
+package be.kdg.ip2.carpoolingapplication.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

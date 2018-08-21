@@ -30,16 +30,6 @@ public class SubRide {
     @JsonIgnore
     private Ride ride;
 
-    //constructors
-    public SubRide() {
-    }
-
-    public SubRide(StartLocation startLocation, EndLocation endLocation, Ride ride) {
-        this.startLocation = startLocation;
-        this.endLocation = endLocation;
-        this.ride = ride;
-    }
-
     //getters and setters
     public Long getSubRideId() {
         return subRideId;
