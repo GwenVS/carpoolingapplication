@@ -1,4 +1,4 @@
-package be.kdg.ip2.carpoolingapplication.domain.user;
+package be.kdg.ip2.carpoolingapplication.security;
 
 /**
  * Wrapper class that holds the state of a token

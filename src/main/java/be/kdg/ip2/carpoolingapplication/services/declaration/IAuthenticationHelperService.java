@@ -1,7 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.services.declaration;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
-import be.kdg.ip2.carpoolingapplication.domain.user.UserTokenState;
+import be.kdg.ip2.carpoolingapplication.security.UserTokenState;
 import be.kdg.ip2.carpoolingapplication.security.JwtAuthenticationRequest;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CustomAuthenticationException;
 import org.springframework.mobile.device.Device;
