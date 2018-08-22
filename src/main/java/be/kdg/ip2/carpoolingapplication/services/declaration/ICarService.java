@@ -10,4 +10,6 @@ public interface ICarService {
     List<Car> getCarsByUsername(String username);
 
     Car createCar(Car car);
+
+    void deleteCar(Long carId);
 }

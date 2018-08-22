@@ -47,5 +47,12 @@ public class CarService implements ICarService {
         }
     }
 
-
+    @Override
+    public void deleteCar(Long carId) {
+        try {
+            carRepository.delete(carId);
+        } catch (Exception e){
+            throw new CarServiceException("@CarService: car not deleted: " + e.getMessage(), e);
+        }
+    }
 }

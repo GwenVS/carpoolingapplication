@@ -19,6 +19,7 @@ public class CarController {
     private ICarService carService;
     private IUserService userService;
 
+    //todo: exceptions opvangen
     @Autowired
     public CarController(ICarService carService, IUserService userService) {
         this.carService = carService;
@@ -52,5 +53,11 @@ public class CarController {
         updatedCar.setMaxAmountPassengers(car.getMaxAmountPassengers());
         updatedCar.setType(car.getType());
         return ResponseEntity.ok(carService.createCar(updatedCar));
+    }
+
+    @DeleteMapping("api/public/cars/{car_id}")
+    public ResponseEntity deleteCar(@PathVariable Long car_id){
+        carService.deleteCar(car_id);
+        return ResponseEntity.ok().build();
     }
 }
