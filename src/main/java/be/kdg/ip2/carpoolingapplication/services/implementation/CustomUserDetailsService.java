@@ -2,7 +2,7 @@ package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.user.Authority;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
-import be.kdg.ip2.carpoolingapplication.repository.declaration.UserRepository;
+import be.kdg.ip2.carpoolingapplication.repositories.UserRepository;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.UserServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;

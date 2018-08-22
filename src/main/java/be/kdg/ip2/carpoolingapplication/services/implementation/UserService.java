@@ -3,7 +3,7 @@ package be.kdg.ip2.carpoolingapplication.services.implementation;
 import be.kdg.ip2.carpoolingapplication.domain.user.Authority;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
-import be.kdg.ip2.carpoolingapplication.repository.declaration.UserRepository;
+import be.kdg.ip2.carpoolingapplication.repositories.UserRepository;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.UserServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +65,6 @@ public class UserService implements IUserService {
             throw new UserServiceException("User not found");
 
         return user;
-    }
-
-    @Override
-    public List<User> findUsersByRole(Class c) {
-        return userRepository.findUsersByRole(c);
     }
 
     @Override

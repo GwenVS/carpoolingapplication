@@ -17,8 +17,6 @@ public interface IUserService extends UserDetailsService{
 
     User findUserByUsername(String username) throws UserServiceException;
 
-    List<User> findUsersByRole(Class c);
-
     User saveUser(User user) throws UserServiceException;
 
     User updateUser(Long userId, User user) throws UserServiceException;

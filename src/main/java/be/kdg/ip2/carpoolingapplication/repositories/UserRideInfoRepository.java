@@ -1,4 +1,4 @@
-package be.kdg.ip2.carpoolingapplication.repository.declaration;
+package be.kdg.ip2.carpoolingapplication.repositories;
 
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;

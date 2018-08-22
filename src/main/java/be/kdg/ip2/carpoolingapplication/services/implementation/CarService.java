@@ -1,7 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.Car;
-import be.kdg.ip2.carpoolingapplication.repository.declaration.CarRepository;
+import be.kdg.ip2.carpoolingapplication.repositories.CarRepository;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CarServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
