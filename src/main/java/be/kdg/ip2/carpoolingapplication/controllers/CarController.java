@@ -44,4 +44,13 @@ public class CarController {
         car.setUser(userService.findUserByUsername(username));
         return ResponseEntity.ok(carService.createCar(car));
     }
+
+    @PutMapping("api/public/cars/{car_id}")
+    public ResponseEntity updateCar(@PathVariable Long car_id, @RequestBody Car car) {
+        Car updatedCar = carService.getCarById(car_id);
+        updatedCar.setConsumption(car.getConsumption());
+        updatedCar.setMaxAmountPassengers(car.getMaxAmountPassengers());
+        updatedCar.setType(car.getType());
+        return ResponseEntity.ok(carService.createCar(updatedCar));
+    }
 }

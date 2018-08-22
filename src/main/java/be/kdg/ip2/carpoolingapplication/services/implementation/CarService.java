@@ -43,7 +43,7 @@ public class CarService implements ICarService {
         try {
             return carRepository.save(car);
         } catch (Exception e){
-            throw new CarServiceException("@CarService: car not saved");
+            throw new CarServiceException("@CarService: car not saved: " + e.getMessage(), e);
         }
     }
 
