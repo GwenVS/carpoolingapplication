@@ -1,5 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 import be.kdg.ip2.carpoolingapplication.domain.Car;
+import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import org.apache.log4j.LogManager;
@@ -57,6 +58,10 @@ public class CarController {
 
     @DeleteMapping("api/public/cars/{car_id}")
     public ResponseEntity deleteCar(@PathVariable Long car_id){
+        Car car = carService.getCarById(car_id);
+        User user = car.getUser();
+        user.getCars().remove(car);
+        userService.saveUser(user);
         carService.deleteCar(car_id);
         return ResponseEntity.ok().build();
     }
