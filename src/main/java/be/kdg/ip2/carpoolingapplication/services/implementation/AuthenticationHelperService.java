@@ -121,7 +121,7 @@ public class AuthenticationHelperService implements IAuthenticationHelperService
     @Override
     public boolean credentialsMatchToken(HttpServletRequest request) {
         String usernameToken = getUsernameFromTokem(request);
-        User tokenUser = userService.findUserByUsername(usernameToken);
+        User tokenUser = userService.getUserByUsername(usernameToken);
         return false;
     }
 
@@ -129,7 +129,7 @@ public class AuthenticationHelperService implements IAuthenticationHelperService
     public boolean userIsAllowedToAccessResource(HttpServletRequest request, String usernameClaimedUser) {
         //usernameClaimedUser is the username that was provided through the url
         String usernameToken = getUsernameFromTokem(request);
-        User tokenUser = userService.findUserByUsername(usernameToken);
+        User tokenUser = userService.getUserByUsername(usernameToken);
 
         //Check whether or not the user is an admin
         //(this is secure because we take the user found in the token)

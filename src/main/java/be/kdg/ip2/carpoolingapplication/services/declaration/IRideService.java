@@ -17,4 +17,6 @@ public interface IRideService {
     List<Ride> getRidesByDepartureTime(LocalDateTime minDepartureTime, LocalDateTime maxDepartureTime);
 
     Ride saveRide(Ride ride1)throws RideServiceException;
+
+    List<Ride> getRidesByUsername(String username);
 }

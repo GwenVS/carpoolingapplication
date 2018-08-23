@@ -45,7 +45,7 @@ public class CarService implements ICarService {
     @Override
     public Car createCar(String username, Car car){
         try {
-            car.setUser(userService.findUserByUsername(username));
+            car.setUser(userService.getUserByUsername(username));
             return carRepository.save(car);
         } catch (Exception e){
             throw new CarServiceException("@CarService: car not saved: " + e.getMessage(), e);

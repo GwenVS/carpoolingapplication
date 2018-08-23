@@ -16,7 +16,7 @@ public interface IUserService extends UserDetailsService{
 
     List<User> findUsers();
 
-    User findUserByUsername(String username) throws UserServiceException;
+    User getUserByUsername(String username) throws UserServiceException;
 
     User saveUser(User user) throws UserServiceException;
 
@@ -39,6 +39,4 @@ public interface IUserService extends UserDetailsService{
     boolean usernameUsed(String username);
 
     boolean emailUsed(String email);
-
-    List<Ride> getRidesByUsername(String username);
 }

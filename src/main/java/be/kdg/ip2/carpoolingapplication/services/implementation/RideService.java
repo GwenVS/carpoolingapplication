@@ -83,7 +83,7 @@ public class RideService implements IRideService {
     public Ride createRide(String username, Ride ride) throws RideServiceException {
         try {
             Ride r = saveRide(ride);
-            User creator = userService.findUserByUsername(username);
+            User creator = userService.getUserByUsername(username);
             r.setCreatorDriverUsername(creator.getUsername());
             List<SubRide> subrides = createSubRides(r);
             r.setSubRides(subrides);
@@ -106,6 +106,18 @@ public class RideService implements IRideService {
         } catch (Exception e) {
             throw new RideServiceException("Ride not saved");
         }
+    }
+
+
+    @Override
+    public List<Ride> getRidesByUsername(String username) {
+        List<Ride> rides = new ArrayList<>();
+        User user = userService.getUserByUsername(username);
+        List<UserRideInfo> userRideInfos = user.getUserRideInfos();
+        for (UserRideInfo uri : userRideInfos) {
+            rides.add(uri.getRide());
+        }
+        return rides;
     }
 
     private SubRide saveSubRide(SubRide subRide) throws RideServiceException {

@@ -27,7 +27,6 @@ import java.util.List;
 public class UserService implements IUserService {
 
     private UserRepository userRepository;
-
     private PasswordEncoder passwordEncoder;
 
     @PersistenceContext
@@ -59,9 +58,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findUserByUsername(String username) throws UserServiceException {
+    public User getUserByUsername(String username) throws UserServiceException {
         User user = userRepository.findUserByUsername(username);
-
         if (user == null)
             throw new UserServiceException("User not found");
 
@@ -160,13 +158,5 @@ public class UserService implements IUserService {
     public User updateUserInformation(Long id, User user) throws UserServiceException {
         User u = userRepository.findOne(id);
         return null;
-    }
-
-    @Override
-    public List<Ride> getRidesByUsername(String username) {
-        userRepository.findUserByUsername(username);
-        List<Ride> rides = new ArrayList<>();
-        //todo: verder
-        return rides;
     }
 }

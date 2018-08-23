@@ -61,6 +61,20 @@ public class RideController {
         }
     }
 
+
+    @GetMapping("/api/public/rides/user/{username}")
+    public ResponseEntity getRidesByUser(@PathVariable String username) {
+        try {
+            List<Ride> rides = rideService.getRidesByUsername(username);
+            logger.info("@RidesController: fetched Rides for user " + username);
+            return ResponseEntity.status(HttpStatus.CREATED).body(rides);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while creating your ride. Try again later");
+        }
+    }
+
+
+
     @GetMapping("/api/public/rides/time/{min_departure_time}/{max_departure_time}")
     public List<Ride> getRidesByDepartureTime(@PathVariable("min_departure_time") LocalDateTime minDepartureTime, @PathVariable("max_departure_time") LocalDateTime maxDepartureTime) {
         logger.info("searching rides departing from " + minDepartureTime + " till " + maxDepartureTime + ".");

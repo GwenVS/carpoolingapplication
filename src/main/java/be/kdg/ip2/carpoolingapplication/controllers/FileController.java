@@ -43,7 +43,7 @@ public class FileController implements HandlerExceptionResolver{
     @PostMapping(value = "/api/private/users/{username}/uploadImage")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity uploadProfilePicture(@PathVariable String username, @RequestBody MultipartFile uploadFile, HttpServletRequest request){
-        User requestUser = userService.findUserByUsername(username);
+        User requestUser = userService.getUserByUsername(username);
 
         if (!authenticationHelperService.userIsAllowedToAccessResource(request, username)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -66,7 +66,7 @@ public class FileController implements HandlerExceptionResolver{
     @GetMapping("/api/private/users/{username}/picture")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Resource> serveFile(@PathVariable String username, HttpServletRequest request){
-        User requestUser = userService.findUserByUsername(username);
+        User requestUser = userService.getUserByUsername(username);
 
         if(requestUser.getProfilePictureFileName() != null){
             Resource file = storageService.loadAsResource(requestUser.getProfilePictureFileName());

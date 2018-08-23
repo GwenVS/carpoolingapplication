@@ -74,7 +74,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/api/private/users/username/{username}")
     public ResponseEntity<User> getUser(@PathVariable String username, HttpServletRequest request){
-        User requestUser = userService.findUserByUsername(username);
+        User requestUser = userService.getUserByUsername(username);
         if (!authenticationHelperService.userIsAllowedToAccessResource(request, username)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -90,7 +90,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<User> updateUser(@PathVariable String username, @Valid @RequestBody User changedUser, HttpServletRequest request){
         String usernameFromToken = (String) request.getAttribute("username");
-        User requestUser = userService.findUserByUsername(username);
+        User requestUser = userService.getUserByUsername(username);
         if (!authenticationHelperService.userIsAllowedToAccessResource(request, username)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         };
@@ -116,7 +116,7 @@ public class UserController {
     @PostMapping("/api/private/users/{username}/updatepassword")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity updatePasswordOfUser(@PathVariable String username, @RequestBody User changedUser, HttpServletRequest request){
-        User requestUser = userService.findUserByUsername(username);
+        User requestUser = userService.getUserByUsername(username);
 
         if (!authenticationHelperService.userIsAllowedToAccessResource(request, username)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -135,16 +135,4 @@ public class UserController {
 
 
     //TODO DELETE USER
-
-
-    @GetMapping("/api/public/user/{username}/rides")
-    public ResponseEntity getRidesByUser(@PathVariable String username) {
-        try {
-            List<Ride> rides = userService.getRidesByUsername(username);
-            logger.info("@RidesController: fetched Rides for user " + username);
-            return ResponseEntity.status(HttpStatus.CREATED).body(rides);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while creating your ride. Try again later");
-        }
-    }
 }
