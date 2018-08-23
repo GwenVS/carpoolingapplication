@@ -26,14 +26,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @RestController
-public class FileRestController implements HandlerExceptionResolver{
-    private static final Logger logger = LogManager.getLogger(FileRestController.class);
+public class FileController implements HandlerExceptionResolver{
+    private static final Logger logger = LogManager.getLogger(FileController.class);
     private final IUserService userService;
     private final IAuthenticationHelperService authenticationHelperService;
     private final IStorageService storageService;
 
     @Autowired
-    public FileRestController(IUserService userService, IAuthenticationHelperService authenticationHelperService, IStorageService storageService) {
+    public FileController(IUserService userService, IAuthenticationHelperService authenticationHelperService, IStorageService storageService) {
         this.userService = userService;
         this.authenticationHelperService = authenticationHelperService;
         this.storageService = storageService;
@@ -77,57 +77,6 @@ public class FileRestController implements HandlerExceptionResolver{
             return ResponseEntity.ok().build();
         }
     }
-/*
-    //Upload a gameSessionImage
-    @PostMapping(value = "/api/private/users/{username}/sessions/{id}/uploadImage")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity uploadProfilePicture(@PathVariable String username, @PathVariable Long id, @RequestBody MultipartFile uploadFile, HttpServletRequest request){
-        User requestUser = userService.findUserByUsername(username);
-
-        if (!authenticationHelperService.userIsAllowedToAccessResource(request, username)){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        };
-
-        if(requestUser == null){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-
-        storageService.store(uploadFile);
-        String filename = StringUtils.cleanPath(uploadFile.getOriginalFilename());
-
-        GameSession gameSession = gameSessionService.getGameSessionWithId(id);
-        gameSession.setImage(filename);
-        gameSessionService.updateGameSession(gameSession);
-        return ResponseEntity.ok().build();
-    }
-
-    //Get a gameSessionImage from a session
-    @GetMapping("/api/private/users/{username}/sessions/{id}/image")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Resource> serveFile(@PathVariable String username, @PathVariable Long id, HttpServletRequest request){
-        GameSession gameSession = gameSessionService.getGameSessionWithId(id);
-
-        Resource file = storageService.loadAsResource(gameSession.getImage());
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-    }
-
-    //Get a gameSessionImage from a session
-    @GetMapping("/api/private/sessions/{id}/image")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Resource> serveFile(@PathVariable Long id, HttpServletRequest request){
-        GameSession gameSession = gameSessionService.getGameSessionWithId(id);
-
-        if(gameSession.getImage() != null){
-            Resource file = storageService.loadAsResource(gameSession.getImage());
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                    "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-        }
-        else{
-            return ResponseEntity.ok().build();
-        }
-
-    }*/
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

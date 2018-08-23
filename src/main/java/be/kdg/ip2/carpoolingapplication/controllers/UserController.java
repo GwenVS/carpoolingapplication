@@ -20,13 +20,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
-public class UserRestController {
-    private static final Logger logger = LogManager.getLogger(UserRestController.class);
+public class UserController {
+    private static final Logger logger = LogManager.getLogger(UserController.class);
     private final IUserService userService;
     private final IAuthenticationHelperService authenticationHelperService;
 
     @Autowired
-    public UserRestController(IUserService userService, IAuthenticationHelperService authenticationHelperService) {
+    public UserController(IUserService userService, IAuthenticationHelperService authenticationHelperService) {
         this.userService = userService;
         this.authenticationHelperService = authenticationHelperService;
     }
@@ -132,4 +132,6 @@ public class UserRestController {
         return ResponseEntity.ok().build();
     }
 
+
+    //TODO DELETE USER
 }

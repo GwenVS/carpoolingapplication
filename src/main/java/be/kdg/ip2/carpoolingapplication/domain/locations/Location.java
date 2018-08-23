@@ -1,7 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.domain.locations;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -11,8 +10,7 @@ import javax.persistence.*;
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@locationId")
-public class Location { //todo: abstracte klasse?
-
+public abstract class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long locationId;
