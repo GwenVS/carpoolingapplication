@@ -1,5 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.services.implementation;
 
+import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.Authority;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
@@ -159,36 +160,13 @@ public class UserService implements IUserService {
     public User updateUserInformation(Long id, User user) throws UserServiceException {
         User u = userRepository.findOne(id);
         return null;
+    }
 
-//        try{
-//            /*
-//             UPDATE USERS
-//             SET  FIRST_NAME = ...,
-//             WHERE
-//             */
-//            em.getTransaction().begin();
-//            int i = em.createQuery("UPDATE User u " +
-//                                            "SET u.firstName = :firstName," +
-//                                            "u.lastName = :lastName," +
-//                                            "u.year = :year," +
-//                                            "u.month = :month," +
-//                                            "u.day = :day," +
-//                                            "u.gender = :gender")
-//                    .setParameter("firstName", user.getFirstName())
-//                    .setParameter("lastName", user.getLastName())
-//                    .setParameter("year", user.getYear())
-//                    .setParameter("month", user.getMonth())
-//                    .setParameter("day", user.getDay())
-//                    .setParameter("gender", user.getGender())
-//                    .executeUpdate();
-//            em.getTransaction().commit();
-//        }catch (Exception e){
-//            String error = "Something went wrong while accessing the database!";
-//            return null;
-//        }
-//        finally {
-//            em.close();
-//        }
-//        return null;
+    @Override
+    public List<Ride> getRidesByUsername(String username) {
+        userRepository.findUserByUsername(username);
+        List<Ride> rides = new ArrayList<>();
+        //todo: verder
+        return rides;
     }
 }

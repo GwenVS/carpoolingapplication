@@ -1,4 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
+import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IAuthenticationHelperService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
@@ -134,4 +135,16 @@ public class UserController {
 
 
     //TODO DELETE USER
+
+
+    @GetMapping("/api/public/user/{username}/rides")
+    public ResponseEntity getRidesByUser(@PathVariable String username) {
+        try {
+            List<Ride> rides = userService.getRidesByUsername(username);
+            logger.info("@RidesController: fetched Rides for user " + username);
+            return ResponseEntity.status(HttpStatus.CREATED).body(rides);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while creating your ride. Try again later");
+        }
+    }
 }

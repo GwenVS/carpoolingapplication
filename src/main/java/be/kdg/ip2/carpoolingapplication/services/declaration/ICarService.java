@@ -9,7 +9,9 @@ public interface ICarService {
 
     List<Car> getCarsByUsername(String username);
 
-    Car createCar(Car car);
+    Car createCar(String username, Car car);
 
     void deleteCar(Long carId);
+
+    Car updateCar(Car car);
 }

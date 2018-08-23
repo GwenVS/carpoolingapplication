@@ -11,6 +11,7 @@ import be.kdg.ip2.carpoolingapplication.repositories.LocationRepository;
 import be.kdg.ip2.carpoolingapplication.repositories.RideRepository;
 import be.kdg.ip2.carpoolingapplication.repositories.SubRideRepository;
 import be.kdg.ip2.carpoolingapplication.repositories.UserRideInfoRepository;
+import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
@@ -29,15 +30,16 @@ import java.util.List;
 public class RideService implements IRideService {
 
     private IUserService userService;
+    private ICarService carService;
+
     private RideRepository rideRepository;
-    private CarService carService;
     private SubRideRepository subRideRepository;
     private LocationRepository locationRepository;
     private UserRideInfoRepository userRideInfoRepository;
 
 
     @Autowired
-    public RideService(IUserService userService, RideRepository rideRepository, CarService carService, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
+    public RideService(IUserService userService, RideRepository rideRepository, ICarService carService, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
         this.userService = userService;
         this.rideRepository = rideRepository;
         this.carService = carService;
@@ -66,7 +68,7 @@ public class RideService implements IRideService {
     }
 
     @Override
-    public List<Ride> getRidesByDepartureTime(LocalDateTime minDepartureTime, LocalDateTime maxDepartureTime) {
+    public List<Ride> getRidesByDepartureTime(LocalDateTime minDepartureTime, LocalDateTime maxDepartureTime){
         List<Ride> rides = rideRepository.findRidesByDepartureTimeOutwardJourneyBetween(minDepartureTime, maxDepartureTime);
         rides.addAll(rideRepository.findRidesByDepartureTimeReturnTripBetween(minDepartureTime, maxDepartureTime));
         if (rides == null) {
@@ -100,9 +102,7 @@ public class RideService implements IRideService {
     @Override
     public Ride saveRide(Ride ride) throws RideServiceException {
         try {
-            Ride r = rideRepository.save(ride);
-            System.out.println(r);
-            return r;
+            return rideRepository.save(ride);
         } catch (Exception e) {
             throw new RideServiceException("Ride not saved");
         }

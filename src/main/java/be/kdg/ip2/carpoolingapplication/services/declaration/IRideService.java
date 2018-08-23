@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IRideService {
+
     List<Ride> getAllRides();
 
-    //create new ride attached to a user
     Ride createRide(String username, Ride ride) throws RideServiceException;
 
     Ride getRideById(long rideId) throws RideServiceException;

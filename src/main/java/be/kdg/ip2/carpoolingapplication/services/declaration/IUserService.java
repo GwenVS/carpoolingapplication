@@ -1,5 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.services.declaration;
 
+import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.UserServiceException;
@@ -39,4 +40,5 @@ public interface IUserService extends UserDetailsService{
 
     boolean emailUsed(String email);
 
+    List<Ride> getRidesByUsername(String username);
 }
