@@ -11,7 +11,6 @@ import be.kdg.ip2.carpoolingapplication.repositories.LocationRepository;
 import be.kdg.ip2.carpoolingapplication.repositories.RideRepository;
 import be.kdg.ip2.carpoolingapplication.repositories.SubRideRepository;
 import be.kdg.ip2.carpoolingapplication.repositories.UserRideInfoRepository;
-import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
@@ -30,7 +29,6 @@ import java.util.List;
 public class RideService implements IRideService {
 
     private IUserService userService;
-    private ICarService carService;
 
     private RideRepository rideRepository;
     private SubRideRepository subRideRepository;
@@ -39,10 +37,9 @@ public class RideService implements IRideService {
 
 
     @Autowired
-    public RideService(IUserService userService, RideRepository rideRepository, ICarService carService, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
+    public RideService(IUserService userService, RideRepository rideRepository, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
         this.userService = userService;
         this.rideRepository = rideRepository;
-        this.carService = carService;
         this.subRideRepository = subRideRepository;
         this.locationRepository = locationRepository;
         this.userRideInfoRepository = userRideInfoRepository;
@@ -84,7 +81,6 @@ public class RideService implements IRideService {
         try {
             Ride r = saveRide(ride);
             User creator = userService.getUserByUsername(username);
-            r.setCreatorDriverUsername(creator.getUsername());
             List<SubRide> subrides = createSubRides(r);
             r.setSubRides(subrides);
             UserRideInfo uri = creatorUserRideInfo(creator, r);
@@ -128,6 +124,17 @@ public class RideService implements IRideService {
         }
     }
 
+    @Override
+    public void deleteRide(Long rideId) throws RideServiceException {
+
+        //todo: verder afwerken
+        try {
+            rideRepository.delete(rideId);
+        } catch (Exception e) {
+            throw new RideServiceException("Ride not deleted");
+        }
+    }
+
     private Location saveLocation(Location location) throws RideServiceException {
         try {
             return locationRepository.save(location);
@@ -140,6 +147,7 @@ public class RideService implements IRideService {
         return userService.saveUser(user);
     }
 
+    //save UserRideInfo for creator that marks him as driver
     private UserRideInfo creatorUserRideInfo(User creator, Ride ride) {
         return userRideInfoRepository.save(new UserRideInfo(true, creator, ride));
     }

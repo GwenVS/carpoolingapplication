@@ -33,11 +33,10 @@ public class Ride {
     @Column(nullable = false)
     private RideType rideType;
 
-    @Column()
-    private String CreatorDriverUsername;
-
-    @Column()
-    private Long carId;
+    @ManyToOne(targetEntity = Car.class,fetch = FetchType.EAGER)
+    @JoinColumn(name="carId")
+    @JsonIgnoreProperties(value = {"rides"})
+    private Car chosenCar;
 
     @Column
     @OneToMany(mappedBy = "ride", targetEntity = SubRide.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -65,33 +64,37 @@ public class Ride {
     }
 
     //ride with returntrip
-    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests, List<RideLocation> locations) {
+    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests, List<RideLocation> locations, Car chosenCar) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.departureTimeReturnTrip = departureTimeReturnTrip;
         this.rideType = RideType.BackAndForth;
         this.userRideInfos = userRideInfos;
         this.rideRequests = rideRequests;
         this.locations = locations;
+        this.chosenCar = chosenCar;
     }
 
-    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip) {
+    public Ride(LocalDateTime departureTimeOutwardJourney, LocalDateTime departureTimeReturnTrip, Car chosenCar) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.departureTimeReturnTrip = departureTimeReturnTrip;
         this.rideType = RideType.BackAndForth;
+        this.chosenCar = chosenCar;
     }
 
     //ride without return trip
-    public Ride(LocalDateTime departureTimeOutwardJourney, List<RideLocation> locations, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests) {
+    public Ride(LocalDateTime departureTimeOutwardJourney, List<RideLocation> locations, List<UserRideInfo> userRideInfos, List<RideRequest> rideRequests, Car chosenCar) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.rideType = RideType.Single;
         this.userRideInfos = userRideInfos;
         this.rideRequests = rideRequests;
         this.locations = locations;
+        this.chosenCar = chosenCar;
     }
 
-    public Ride(LocalDateTime departureTimeOutwardJourney) {
+    public Ride(LocalDateTime departureTimeOutwardJourney, Car chosenCar) {
         this.departureTimeOutwardJourney = departureTimeOutwardJourney;
         this.rideType = RideType.Single;
+        this.chosenCar = chosenCar;
     }
 
 
@@ -129,20 +132,12 @@ public class Ride {
         this.rideType = rideType;
     }
 
-    public String getCreatorDriverUsername() {
-        return CreatorDriverUsername;
+    public Car getChosenCar() {
+        return chosenCar;
     }
 
-    public void setCreatorDriverUsername(String creatorDriverUsername) {
-        CreatorDriverUsername = creatorDriverUsername;
-    }
-
-    public Long getCarId() {
-        return carId;
-    }
-
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setChosenCar(Car chosenCar) {
+        this.chosenCar = chosenCar;
     }
 
     public List<SubRide> getSubRides() {
@@ -200,8 +195,6 @@ public class Ride {
                 ", departureTimeOutwardJourney=" + departureTimeOutwardJourney +
                 ", departureTimeReturnTrip=" + departureTimeReturnTrip +
                 ", rideType=" + rideType +
-                ", CreatorDriverUsername='" + CreatorDriverUsername + '\'' +
-                ", carId=" + carId +
                 '}';
     }
 }

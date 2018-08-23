@@ -1,9 +1,12 @@
 package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.Car;
+import be.kdg.ip2.carpoolingapplication.domain.Ride;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.repositories.CarRepository;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
+import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CarServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +18,18 @@ import java.util.List;
 public class CarService implements ICarService {
 
     private CarRepository carRepository;
-    private UserService userService;
+    private IUserService userService;
+    private IRideService rideService;
 
     @Autowired
-    public CarService(CarRepository carRepository, UserService userService) {
+    public CarService(CarRepository carRepository, UserService userService, RideService rideService) {
         this.carRepository = carRepository;
         this.userService = userService;
+        this.rideService = rideService;
     }
 
     @Override
-    public Car getCarById(Long carId){
+    public Car getCarById(Long carId) throws CarServiceException{
         try{
             return carRepository.getOne(carId);
         } catch (Exception e){
@@ -43,7 +48,7 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public Car createCar(String username, Car car){
+    public Car createCar(String username, Car car) throws CarServiceException{
         try {
             car.setUser(userService.getUserByUsername(username));
             return carRepository.save(car);
@@ -53,7 +58,7 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public void deleteCar(Long carId) {
+    public void deleteCar(Long carId) throws CarServiceException {
         try {
             Car car = getCarById(carId);
             User user = car.getUser();
@@ -66,7 +71,7 @@ public class CarService implements ICarService {
     }
 
     @Override
-    public Car updateCar(Car car) {
+    public Car updateCar(Car car) throws CarServiceException {
         try {
             return carRepository.save(car);
         } catch (Exception e){

@@ -3,8 +3,11 @@ import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table()
@@ -28,6 +31,11 @@ public class Car {
     @JoinColumn(name="userId")
     @JsonIgnoreProperties(value = {"userId", "profilePictureFileName","enabled","password","credentialsNonExpired", "accountNonExpired", "accountNonLocked","userRoles","authorities", "cars", "userRideInfos", "rideRequests"})
     private User user;
+
+    @Column
+    @OneToMany(mappedBy = "chosenCar", targetEntity = Ride.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private List<Ride> rides = new ArrayList<>();
 
 
     //constructors
@@ -82,4 +90,14 @@ public class Car {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public List<Ride> getRides() {
+        return rides;
+    }
+
+    public void setRides(List<Ride> rides) {
+        this.rides = rides;
+    }
+
+    public void addRide(Ride ride) { this.rides.add(ride); }
 }

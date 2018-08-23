@@ -19,4 +19,6 @@ public interface IRideService {
     Ride saveRide(Ride ride1)throws RideServiceException;
 
     List<Ride> getRidesByUsername(String username);
+
+    void deleteRide(Long rideId) throws RideServiceException;
 }
