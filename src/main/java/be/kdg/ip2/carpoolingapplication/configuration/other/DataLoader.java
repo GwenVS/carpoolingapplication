@@ -45,12 +45,14 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
 
         User carpooler_M_S_1 =new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>());
         this.customUserDetailsService.addUser(carpooler_M_S_1);
+        carpooler_M_S_1.setIsSmoker(true);
         Car car1 = new Car("Daihatsu terios", 8.5, 3, carpooler_M_S_1);
         carpooler_M_S_1.addCar(car1);
         carpooler_M_S_1.addCar(new Car("citroën DS4", 6.2, 2, carpooler_M_S_1));
         User savedUser = userService.saveUser(carpooler_M_S_1);
         User carpooler_F_S_2 = this.customUserDetailsService.addUser(new User("Jane", "Doe", "jane", "carpooler_F_S_2@Doe.com", LocalDate.of(1996, 2, 1), "testtest", Gender.Female, new ArrayList<>()));
-
+        carpooler_F_S_2.setIsSmoker(true);
+        userService.saveUser(carpooler_F_S_2);
         User carpooler_M_NS_1 = this.customUserDetailsService.addUser(new User("Richard", "Roe", "richard", "carpooler_M_NS_1@Roe.com", LocalDate.of(1991, 11, 1), "testtest", Gender.Male, new ArrayList<>()));
 
 

@@ -50,6 +50,9 @@ public class User implements UserDetails {
     private Gender gender;
 
     @Column
+    private boolean isSmoker;
+
+    @Column
     @OneToMany(mappedBy = "user",targetEntity = Authority.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Authority> authorities = new ArrayList<>();
@@ -176,6 +179,14 @@ public class User implements UserDetails {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public boolean getIsSmoker() {
+        return isSmoker;
+    }
+
+    public void setIsSmoker(boolean smoker) {
+        isSmoker = smoker;
     }
 
     public List<Car> getCars() {

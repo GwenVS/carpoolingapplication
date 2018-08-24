@@ -108,6 +108,7 @@ public class UserController {
         requestUser.setLastName(changedUser.getLastName());
         requestUser.setGender(changedUser.getGender());
         requestUser.setBirthday(changedUser.getBirthday());
+        requestUser.setIsSmoker(changedUser.getIsSmoker());
         User savedUser = userService.updateUserNoPassword(requestUser);
         return ResponseEntity.ok(savedUser);
     }
