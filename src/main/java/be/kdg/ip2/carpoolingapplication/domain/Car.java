@@ -35,6 +35,7 @@ public class Car {
     @Column
     @OneToMany(mappedBy = "chosenCar", targetEntity = Ride.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    @JsonIgnoreProperties(value = {"subRides", "userRideInfos", "rideRequests", "locations", "chosenCar"})
     private List<Ride> rides = new ArrayList<>();
 
 

@@ -35,7 +35,7 @@ public class RideController {
     @PostMapping(("/api/public/rides/ride/{username}"))
     //@PostMapping(("/api/private/rides/{user_id}"))
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity createRide(@PathVariable("username") String username, @RequestBody Ride ride) {
+    public ResponseEntity createRide(@PathVariable String username, @RequestBody Ride ride) {
         try {
             Ride createdRide = rideService.createRide(username, ride);
             logger.info("@RidesController: new ride created.");
