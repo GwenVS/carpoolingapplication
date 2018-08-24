@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@locationId")
 public class RideLocation extends Location {
 
     @ManyToOne(targetEntity = Ride.class, fetch = FetchType.EAGER)

@@ -16,7 +16,6 @@ import java.util.List;
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@rideId")
 public class Ride {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@subRideId")
 public class SubRide {
 
     @Id

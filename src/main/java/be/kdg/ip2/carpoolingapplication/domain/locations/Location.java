@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@locationId")
 public abstract class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

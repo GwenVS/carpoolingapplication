@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property="@locationId")
 public class EndLocation extends Location {
     @OneToOne(targetEntity = SubRide.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "subRideId")
