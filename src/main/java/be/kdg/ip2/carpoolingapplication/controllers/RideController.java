@@ -32,7 +32,7 @@ public class RideController {
     }
 
     //create new ride
-    @PostMapping(("/api/public/rides/{username}"))
+    @PostMapping(("/api/public/rides/ride/{username}"))
     //@PostMapping(("/api/private/rides/{user_id}"))
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity createRide(@PathVariable("username") String username, @RequestBody Ride ride) {
