@@ -33,7 +33,7 @@ public class Car {
     private User user;
 
     @Column
-    @OneToMany(mappedBy = "chosenCar", targetEntity = Ride.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "chosenCar", targetEntity = Ride.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<Ride> rides = new ArrayList<>();
 

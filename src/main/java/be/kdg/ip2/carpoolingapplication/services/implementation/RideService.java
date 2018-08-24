@@ -7,10 +7,8 @@ import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
 import be.kdg.ip2.carpoolingapplication.domain.locations.StartLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
-import be.kdg.ip2.carpoolingapplication.repositories.LocationRepository;
-import be.kdg.ip2.carpoolingapplication.repositories.RideRepository;
-import be.kdg.ip2.carpoolingapplication.repositories.SubRideRepository;
-import be.kdg.ip2.carpoolingapplication.repositories.UserRideInfoRepository;
+import be.kdg.ip2.carpoolingapplication.repositories.*;
+import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IUserService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
@@ -29,20 +27,24 @@ import java.util.List;
 public class RideService implements IRideService {
 
     private IUserService userService;
+    private ICarService carService;
 
     private RideRepository rideRepository;
     private SubRideRepository subRideRepository;
     private LocationRepository locationRepository;
     private UserRideInfoRepository userRideInfoRepository;
+    private RideRequestRepository rideRequestRepository;
 
 
     @Autowired
-    public RideService(IUserService userService, RideRepository rideRepository, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository) {
+    public RideService(IUserService userService, ICarService carService, RideRepository rideRepository, SubRideRepository subRideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository, RideRequestRepository rideRequestRepository) {
         this.userService = userService;
         this.rideRepository = rideRepository;
         this.subRideRepository = subRideRepository;
         this.locationRepository = locationRepository;
         this.userRideInfoRepository = userRideInfoRepository;
+        this.rideRequestRepository = rideRequestRepository;
+        this.carService = carService;
     }
 
     @Override
@@ -126,9 +128,35 @@ public class RideService implements IRideService {
 
     @Override
     public void deleteRide(Long rideId) throws RideServiceException {
-
-        //todo: verder afwerken
         try {
+            Ride ride = rideRepository.findOne(rideId);
+            //remove UserRideInfo's from users and delete
+            List<UserRideInfo> userRideInfos = ride.getUserRideInfos();
+            for (int i =userRideInfos.size()-1; i>=0 ;i--) {
+                UserRideInfo uri = userRideInfos.get(i);
+                User user = uri.getUser();
+                user.getUserRideInfos().remove(uri);
+                userService.saveUser(user);
+                ride.getUserRideInfos().remove(uri);
+                saveRide(ride);
+                userRideInfoRepository.delete(uri);
+            }
+            //remove rideRequests from users and delete
+            List<RideRequest> rideRequests = ride.getRideRequests();
+            for(int i =rideRequests.size()-1; i>=0 ;i--) {
+                RideRequest rideRequest = rideRequests.get(i);
+                User user = rideRequest.getUser();
+                user.getRideRequests().remove(rideRequest);
+                userService.saveUser(user);
+                ride.getRideRequests().remove(rideRequest);
+                saveRide(ride);
+                rideRequestRepository.delete(rideRequest);
+            }
+            //romove from car
+            Car car  = ride.getChosenCar();
+            car.getRides().remove(ride);
+            carService.updateCar(car);
+            //delete ride
             rideRepository.delete(rideId);
         } catch (Exception e) {
             throw new RideServiceException("Ride not deleted");

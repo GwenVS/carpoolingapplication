@@ -19,13 +19,11 @@ public class CarService implements ICarService {
 
     private CarRepository carRepository;
     private IUserService userService;
-    private IRideService rideService;
 
     @Autowired
-    public CarService(CarRepository carRepository, UserService userService, RideService rideService) {
+    public CarService(CarRepository carRepository, UserService userService) {
         this.carRepository = carRepository;
         this.userService = userService;
-        this.rideService = rideService;
     }
 
     @Override

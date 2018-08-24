@@ -77,4 +77,14 @@ public class RideController {
         logger.info("searching rides departing from " + minDepartureTime + " till " + maxDepartureTime + ".");
         return rideService.getRidesByDepartureTime(minDepartureTime, maxDepartureTime);
     }
+
+    @DeleteMapping("api/public/rides/{ride_id}")
+    public ResponseEntity deleteRide(@PathVariable Long ride_id){
+        try {
+            rideService.deleteRide(ride_id);
+            return ResponseEntity.ok().build();
+        } catch (RideServiceException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while deleting your ride. Try again later");
+        }
+    }
 }
