@@ -35,7 +35,7 @@ public class Ride {
 
     @ManyToOne(targetEntity = Car.class,fetch = FetchType.EAGER)
     @JoinColumn(name="carId")
-    @JsonIgnoreProperties(value = {"rides"})
+    @JsonIgnoreProperties(value = {"rides", "user"})
     private Car chosenCar;
 
     @Column
