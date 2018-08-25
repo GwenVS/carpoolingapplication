@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 
 @Entity
-@Table()
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class RideLocation extends Location {
 

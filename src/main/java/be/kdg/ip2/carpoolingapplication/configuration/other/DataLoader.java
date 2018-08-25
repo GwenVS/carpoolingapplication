@@ -26,7 +26,7 @@ import java.util.List;
 
 @Component
 public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
-
+/*
     private CustomUserDetailsService customUserDetailsService;
     private IUserService userService;
     private IRideService rideService;
@@ -39,10 +39,10 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         this.rideService = rideService;
         this.carService = carService;
     }
-
+*/
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-
+/*
         User carpooler_M_S_1 =new User("John", "Doe", "john", "carpooler_M_S_1@Doe.com", LocalDate.of(1997,3,5), "testtest", Gender.Male, new ArrayList<>());
         this.customUserDetailsService.addUser(carpooler_M_S_1);
         carpooler_M_S_1.setIsSmoker(true);
@@ -83,6 +83,6 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         } catch (RideServiceException e) {
             System.out.println("@DataLoader: if this goes wrong, i dunno anymore xD");
         }
-
+*/
     }
 }

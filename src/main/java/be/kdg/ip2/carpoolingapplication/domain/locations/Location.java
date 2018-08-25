@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 
 @Entity
-@Table()
+@Table
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public abstract class Location {
     @Id
