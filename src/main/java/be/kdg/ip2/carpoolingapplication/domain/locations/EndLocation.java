@@ -1,40 +1,24 @@
 package be.kdg.ip2.carpoolingapplication.domain.locations;
 
-import be.kdg.ip2.carpoolingapplication.domain.SubRide;
-import be.kdg.ip2.carpoolingapplication.domain.locations.Location;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class EndLocation extends Location {
-    @OneToOne(targetEntity = SubRide.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "subRideId")
+    @OneToOne(targetEntity = RideRequest.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "rideRequestId")
     @JsonIgnore
-    private SubRide subRide;
+    private RideRequest rideRequest;
 
-    public EndLocation() {
+    public RideRequest getRideRequest() {
+        return rideRequest;
     }
 
-    public EndLocation(Location location, SubRide subRide){
-        super(location.getLatitude(), location.getLongitude());
-        this.subRide = subRide;
-    }
-
-    public EndLocation(double latitude, double longitude, SubRide subRide) {
-        super(latitude, longitude);
-        this.subRide = subRide;
-    }
-
-    public SubRide getSubRide() {
-        return subRide;
-    }
-
-    public void setSubRide(SubRide subRide) {
-        this.subRide = subRide;
+    public void setRideRequest(RideRequest rideRequest) {
+        this.rideRequest = rideRequest;
     }
 }

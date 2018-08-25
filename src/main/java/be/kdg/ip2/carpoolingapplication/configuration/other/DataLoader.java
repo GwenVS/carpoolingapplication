@@ -1,7 +1,9 @@
 package be.kdg.ip2.carpoolingapplication.configuration.other;
 
 import be.kdg.ip2.carpoolingapplication.domain.*;
+import be.kdg.ip2.carpoolingapplication.domain.locations.EndLocation;
 import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
+import be.kdg.ip2.carpoolingapplication.domain.locations.StartLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
@@ -21,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used for placing initial data into the database
+ * This class is used for placing initial tryout data into the database
+ * *******ONLY FOR TESTING********
+ * Needs spring.jpa.hibernate.ddl-auto=create (@application.properties)
  */
 
 @Component
@@ -75,6 +79,7 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         ride1.addUserRideInfo(userRideInfo2);
         carpooler_F_S_2.addUserRideInfo(userRideInfo2);
         // 1 riderequest
+        //todo: edit constructor for dummy upload StartLocation - EndLocation
         RideRequest rideRequest1 = new RideRequest(carpooler_M_NS_1, ride1, "I would like to join you for this ride");
         ride1.addRideRequest(rideRequest1);
         carpooler_M_NS_1.addRideRequest(rideRequest1);

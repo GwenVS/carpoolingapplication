@@ -1,10 +1,9 @@
 package be.kdg.ip2.carpoolingapplication.domain;
 
+import be.kdg.ip2.carpoolingapplication.domain.locations.EndLocation;
+import be.kdg.ip2.carpoolingapplication.domain.locations.StartLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
@@ -15,6 +14,12 @@ public class RideRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rideRequestId;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rideRequest")
+    private StartLocation startLocation;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "rideRequest")
+    private EndLocation endLocation;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
@@ -27,19 +32,18 @@ public class RideRequest {
     private Ride ride;
 
     @Column
-    private String Text;
+    private String requestText;
 
 
     //constructors
     public RideRequest() {
     }
 
-    public RideRequest(User user, Ride ride, String text) {
+    public RideRequest(User user, Ride ride, String requestText) {
         this.user = user;
         this.ride = ride;
-        Text = text;
+        this.requestText = requestText;
     }
-
 
     //getters and setters
     public Long getRideRequestId() {
@@ -66,11 +70,11 @@ public class RideRequest {
         this.ride = ride;
     }
 
-    public String getText() {
-        return Text;
+    public String getRequestText() {
+        return requestText;
     }
 
-    public void setText(String text) {
-        Text = text;
+    public void setRequestText(String requestText) {
+        this.requestText = requestText;
     }
 }

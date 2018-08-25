@@ -38,11 +38,6 @@ public class Ride {
     private Car chosenCar;
 
     @Column
-    @OneToMany(mappedBy = "ride", targetEntity = SubRide.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private List<SubRide> subRides = new ArrayList<>();
-
-    @Column
     @OneToMany(mappedBy = "ride", targetEntity = UserRideInfo.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(org.hibernate.annotations.FetchMode.SELECT)
     private List<UserRideInfo> userRideInfos = new ArrayList<>();
@@ -137,18 +132,6 @@ public class Ride {
 
     public void setChosenCar(Car chosenCar) {
         this.chosenCar = chosenCar;
-    }
-
-    public List<SubRide> getSubRides() {
-        return subRides;
-    }
-
-    public void setSubRides(List<SubRide> subRides) {
-        this.subRides = subRides;
-    }
-
-    public void addSubRide(SubRide subRide) {
-        this.subRides.add(subRide);
     }
 
     public List<UserRideInfo> getUserRideInfos() {
