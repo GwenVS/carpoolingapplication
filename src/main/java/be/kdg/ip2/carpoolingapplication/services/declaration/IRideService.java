@@ -1,6 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.services.declaration;
 
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
+import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 
 import java.time.LocalDateTime;
@@ -21,4 +22,6 @@ public interface IRideService {
     List<Ride> getRidesByUsername(String username);
 
     void deleteRide(Long rideId) throws RideServiceException;
+
+    RideRequest createRideRequest(Long rideId, String username, RideRequest rideRequest) throws RideServiceException;
 }

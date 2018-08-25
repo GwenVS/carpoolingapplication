@@ -62,7 +62,7 @@ public class RideService implements IRideService {
     }
 
     @Override
-    public List<Ride> getRidesByDepartureTime(LocalDateTime minDepartureTime, LocalDateTime maxDepartureTime){
+    public List<Ride> getRidesByDepartureTime(LocalDateTime minDepartureTime, LocalDateTime maxDepartureTime) {
         List<Ride> rides = rideRepository.findRidesByDepartureTimeOutwardJourneyBetween(minDepartureTime, maxDepartureTime);
         rides.addAll(rideRepository.findRidesByDepartureTimeReturnTripBetween(minDepartureTime, maxDepartureTime));
         if (rides == null) {
@@ -82,10 +82,10 @@ public class RideService implements IRideService {
             r.addUserRideInfo(uri);
             creator.addUserRideInfo(uri);
             saveRide(r);
-            saveUser(creator);
+            userService.saveUser(creator);
             return r;
         } catch (Exception e) {
-            throw new RideServiceException("Ride not saved");
+            throw new RideServiceException("Ride not saved: " + e.getMessage());
         }
     }
 
@@ -95,7 +95,7 @@ public class RideService implements IRideService {
         try {
             return rideRepository.save(ride);
         } catch (Exception e) {
-            throw new RideServiceException("Ride not saved");
+            throw new RideServiceException("Ride not saved: " + e.getMessage());
         }
     }
 
@@ -117,7 +117,7 @@ public class RideService implements IRideService {
             Ride ride = rideRepository.findOne(rideId);
             //remove UserRideInfo's from users and delete
             List<UserRideInfo> userRideInfos = ride.getUserRideInfos();
-            for (int i =userRideInfos.size()-1; i>=0 ;i--) {
+            for (int i = userRideInfos.size() - 1; i >= 0; i--) {
                 UserRideInfo uri = userRideInfos.get(i);
                 User user = uri.getUser();
                 user.getUserRideInfos().remove(uri);
@@ -128,7 +128,7 @@ public class RideService implements IRideService {
             }
             //remove rideRequests from users and delete
             List<RideRequest> rideRequests = ride.getRideRequests();
-            for(int i =rideRequests.size()-1; i>=0 ;i--) {
+            for (int i = rideRequests.size() - 1; i >= 0; i--) {
                 RideRequest rideRequest = rideRequests.get(i);
                 User user = rideRequest.getUser();
                 user.getRideRequests().remove(rideRequest);
@@ -138,26 +138,36 @@ public class RideService implements IRideService {
                 rideRequestRepository.delete(rideRequest);
             }
             //romove from car
-            Car car  = ride.getChosenCar();
+            Car car = ride.getChosenCar();
             car.getRides().remove(ride);
             carService.updateCar(car);
             //delete ride
             rideRepository.delete(rideId);
         } catch (Exception e) {
-            throw new RideServiceException("Ride not deleted");
+            throw new RideServiceException("Ride not deleted: " + e.getMessage());
         }
+    }
+
+    @Override
+    public RideRequest createRideRequest(Long rideId, String username, RideRequest rideRequest) throws RideServiceException {
+        try {
+            User user = userService.getUserByUsername(username);
+            Ride ride = getRideById(rideId);
+            rideRequest.setRide(ride);
+            rideRequest.setUser(user);
+            return rideRequestRepository.save(rideRequest);
+        } catch (Exception e) {
+            throw new RideServiceException("RideRequest not saved: " + e.getMessage());
+        }
+
     }
 
     private Location saveLocation(Location location) throws RideServiceException {
         try {
             return locationRepository.save(location);
         } catch (Exception e) {
-            throw new RideServiceException("Location not saved");
+            throw new RideServiceException("Location not saved: " + e.getMessage());
         }
-    }
-
-    private User saveUser(User user) {
-        return userService.saveUser(user);
     }
 
     //save UserRideInfo for creator that marks him as driver
