@@ -109,27 +109,6 @@ public class RideController {
     }
 
     /**
-     * create a rideRequest to join a ride
-     * @param ride_id
-     * @param username
-     * @param rideRequest
-     * @return
-     */
-    @PostMapping("/api/public/rides/{ride_id}/user/{username}")
-    public ResponseEntity createRideRequest(@PathVariable Long ride_id, @PathVariable String username, @RequestBody RideRequest rideRequest) {
-        try {
-            RideRequest createdRideRequest = rideService.createRideRequest(ride_id, username, rideRequest);
-            logger.info("@RidesController: new rideRequest created.");
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdRideRequest);
-        } catch (RideServiceException e) {
-            logger.error("@RidesController: error while creating new ride: " + rideRequest.toString() + "error: " + e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("RideServiceException: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while creating your ride. Try again later");
-        }
-    }
-
-    /**
      * delete a ride with given rideId
      *
      * @param ride_id

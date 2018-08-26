@@ -185,20 +185,6 @@ public class RideService implements IRideService {
         }
     }
 
-    @Override
-    public RideRequest createRideRequest(Long rideId, String username, RideRequest rideRequest) throws RideServiceException {
-        try {
-            User user = userService.getUserByUsername(username);
-            Ride ride = getRideById(rideId);
-            rideRequest.setRide(ride);
-            rideRequest.setUser(user);
-            return rideRequestRepository.save(rideRequest);
-        } catch (Exception e) {
-            throw new RideServiceException("RideRequest not saved: " + e.getMessage());
-        }
-
-    }
-
     //save UserRideInfo for creator that marks him as driver
     private UserRideInfo creatorUserRideInfo(User creator, Ride ride) {
         return userRideInfoRepository.save(new UserRideInfo(true, creator, ride));
