@@ -1,6 +1,7 @@
 package be.kdg.ip2.carpoolingapplication.configuration.other;
 
 import be.kdg.ip2.carpoolingapplication.domain.*;
+import be.kdg.ip2.carpoolingapplication.domain.enums.RideType;
 import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
@@ -65,6 +66,7 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         }
 
         // passagepoints
+        ride1.setRideType(RideType.Single);
         List<RideLocation> locations = new ArrayList<RideLocation>();
         locations.add(new RideLocation(51.260197, 4.402771, ride1));//antwerpen
         locations.add(new RideLocation(51.02574, 4.47762, ride1));//mechelen
