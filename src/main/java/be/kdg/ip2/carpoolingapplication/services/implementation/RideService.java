@@ -1,7 +1,9 @@
 package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.*;
+import be.kdg.ip2.carpoolingapplication.domain.enums.RideType;
 import be.kdg.ip2.carpoolingapplication.domain.locations.Location;
+import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
 import be.kdg.ip2.carpoolingapplication.repositories.*;
@@ -81,7 +83,32 @@ public class RideService implements IRideService {
             UserRideInfo uri = creatorUserRideInfo(creator, r);
             r.addUserRideInfo(uri);
             creator.addUserRideInfo(uri);
+            for (int i=0 ;i<r.getLocations().size() ;i++) {
+                RideLocation rl = r.getLocations().get(i);
+                rl.setRide(r);
+            }
             saveRide(r);
+            if (r.getDepartureTimeReturnTrip() != null) {
+                Ride rr = new Ride();
+                rr.setDepartureTimeOutwardJourney(r.getDepartureTimeReturnTrip());
+                rr.setRideType(RideType.BackAndForth);
+                rr.setChosenCar(r.getChosenCar());
+                Ride returnRide = saveRide(rr);
+                UserRideInfo uri2 = creatorUserRideInfo(creator, returnRide);
+                returnRide.addUserRideInfo(uri2);
+                creator.addUserRideInfo(uri2);
+                List<RideLocation> rideLocs = new ArrayList<>();
+                for (int i=r.getLocations().size()-1 ;i>=0;i--) {
+                    RideLocation originalRL = r.getLocations().get(i);
+                    RideLocation newRl = new RideLocation();
+                    newRl.setLatitude(originalRL.getLatitude());
+                    newRl.setLongitude(originalRL.getLongitude());
+                    newRl.setRide(returnRide);
+                    rideLocs.add(newRl);
+                }
+                returnRide.setLocations(rideLocs);
+                saveRide(returnRide);
+            }
             userService.saveUser(creator);
             return r;
         } catch (Exception e) {
