@@ -1,4 +1,5 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
+
 import be.kdg.ip2.carpoolingapplication.domain.Car;
 import be.kdg.ip2.carpoolingapplication.services.declaration.ICarService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.CarServiceException;
@@ -16,26 +17,36 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class CarController {
     private static final Logger logger = LogManager.getLogger(CarController.class);
+    private static final String CAR_URL = "/api/public/cars";
 
     private ICarService carService;
 
-    //todo: exceptions opvangen
     @Autowired
     public CarController(ICarService carService) {
         this.carService = carService;
     }
 
-    @GetMapping("api/public/cars/user/{username}")
-    //@GetMapping("/api/private/cars/user/{username}")
+    /**
+     * GET CARS FOR USER
+     * @param username
+     * @return
+     */
+    @GetMapping(CAR_URL + "/user/{username}")
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public List<Car> getAllCarsByUser(@PathVariable("username") String username){
+    public List<Car> getAllCarsByUser(@PathVariable("username") String username) {
         return carService.getCarsByUsername(username);
     }
 
-    @PostMapping("api/public/cars/user/{username}")
-    //@PostMapping("/api/private/cars/user/{username}")
+
+    /**
+     * CREATE CAR
+     * @param username
+     * @param car
+     * @return
+     */
+    @PostMapping(CAR_URL + "/user/{username}")
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity createCar(@PathVariable String username, @RequestBody Car car){
+    public ResponseEntity createCar(@PathVariable String username, @RequestBody Car car) {
         try {
             return ResponseEntity.ok(carService.createCar(username, car));
         } catch (CarServiceException e) {
@@ -45,7 +56,13 @@ public class CarController {
         }
     }
 
-    @PutMapping("api/public/cars/{car_id}")
+    /**
+     * UPDATE CAR
+     * @param car_id
+     * @param car
+     * @return
+     */
+    @PutMapping(CAR_URL + "/{car_id}")
     public ResponseEntity updateCar(@PathVariable Long car_id, @RequestBody Car car) {
         try {
             Car updatedCar = carService.getCarById(car_id);
@@ -60,8 +77,13 @@ public class CarController {
         }
     }
 
-    @DeleteMapping("api/public/cars/{car_id}")
-    public ResponseEntity deleteCar(@PathVariable Long car_id){
+    /**
+     * DELETE CAR
+     * @param car_id
+     * @return
+     */
+    @DeleteMapping(CAR_URL + "/{car_id}")
+    public ResponseEntity deleteCar(@PathVariable Long car_id) {
         try {
             carService.deleteCar(car_id);
             return ResponseEntity.ok().build();

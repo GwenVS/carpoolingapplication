@@ -39,7 +39,13 @@ public class FileController implements HandlerExceptionResolver{
         this.storageService = storageService;
     }
 
-    //Upload a profilepicture
+    /**
+     * Upload a profilepicture
+     * @param username
+     * @param uploadFile
+     * @param request
+     * @return
+     */
     @PostMapping(value = "/api/private/users/{username}/uploadImage")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity uploadProfilePicture(@PathVariable String username, @RequestBody MultipartFile uploadFile, HttpServletRequest request){
@@ -62,7 +68,12 @@ public class FileController implements HandlerExceptionResolver{
         return ResponseEntity.ok().build();
     }
 
-    //Get a profilepicture
+    /**
+     * Get a profilepicture
+     * @param username
+     * @param request
+     * @return
+     */
     @GetMapping("/api/private/users/{username}/picture")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Resource> serveFile(@PathVariable String username, HttpServletRequest request){

@@ -1,7 +1,6 @@
 package be.kdg.ip2.carpoolingapplication.controllers;
 
 import be.kdg.ip2.carpoolingapplication.domain.Ride;
-import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 import org.apache.log4j.LogManager;
@@ -18,6 +17,8 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class RideController {
     private static final Logger logger = LogManager.getLogger(RideController.class);
+    private static final String RIDE_URL = "/api/public/rides";
+    private static final String PUBLIC_RIDE_URL = "/api/public/rides";
 
     private IRideService rideService;
 
@@ -27,12 +28,11 @@ public class RideController {
     }
 
     /**
-     * find 1 ride by rideId
-     *
+     * find ride by rideId
      * @param rideId
      * @return Ride
      */
-    @GetMapping("/api/public/rides/{ride_id}")
+    @GetMapping(RIDE_URL + "/{ride_id}")
     public ResponseEntity get(@PathVariable("ride_id") long rideId) {
         try {
             Ride ride = rideService.getRideById(rideId);
@@ -47,29 +47,23 @@ public class RideController {
 
     /**
      * find all rides for 1 user with given username
-     *
      * @param username
      * @return List<Ride>
      */
-    @GetMapping("/api/public/rides/user/{username}")
+    @GetMapping(RIDE_URL + "/user/{username}")
     public ResponseEntity getRidesByUser(@PathVariable String username) {
-        try {
-            List<Ride> rides = rideService.getRidesByUsername(username);
-            logger.info("@RidesController: fetched Rides for user " + username);
-            return ResponseEntity.status(HttpStatus.CREATED).body(rides);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong while fetching your rides. Try again later");
-        }
+        List<Ride> rides = rideService.getRidesByUsername(username);
+        logger.info("@RidesController: fetched Rides for user " + username);
+        return ResponseEntity.status(HttpStatus.OK).body(rides);
     }
 
     /**
      * find all rides between min and max departureTime
-     *
      * @param minDepartureTime
      * @param maxDepartureTime
      * @return
      */
-    @GetMapping("/api/public/rides/time/{min_departure_time}/{max_departure_time}")
+    @GetMapping(RIDE_URL + "/time/{min_departure_time}/{max_departure_time}")
     public List<Ride> getRidesByDepartureTime(@PathVariable("min_departure_time") LocalDateTime minDepartureTime, @PathVariable("max_departure_time") LocalDateTime maxDepartureTime) {
         logger.info("searching rides departing from " + minDepartureTime + " till " + maxDepartureTime + ".");
         return rideService.getRidesByDepartureTime(minDepartureTime, maxDepartureTime);
@@ -80,7 +74,7 @@ public class RideController {
      * fetches first 10 rides
      * @return List<Ride>
      */
-    @GetMapping("/api/public/rides")
+    @GetMapping(RIDE_URL)
     public List<Ride> getRides() {
         logger.info("@RidesController: searching departing rides.");
         return rideService.getDepartingRides();
@@ -92,8 +86,7 @@ public class RideController {
      * @param ride
      * @return Ride
      */
-    @PostMapping("/api/public/rides/ride/{username}")
-    //@PostMapping(("/api/private/rides/{user_id}"))
+    @PostMapping(RIDE_URL + "/ride/{username}")
     //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity createRide(@PathVariable String username, @RequestBody Ride ride) {
         try {
@@ -110,11 +103,10 @@ public class RideController {
 
     /**
      * delete a ride with given rideId
-     *
      * @param ride_id
      * @return
      */
-    @DeleteMapping("api/public/rides/{ride_id}")
+    @DeleteMapping(RIDE_URL + "/{ride_id}")
     public ResponseEntity deleteRide(@PathVariable Long ride_id) {
         try {
             rideService.deleteRide(ride_id);

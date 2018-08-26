@@ -2,7 +2,6 @@ package be.kdg.ip2.carpoolingapplication.controllers;
 
 import be.kdg.ip2.carpoolingapplication.domain.RideRequest;
 import be.kdg.ip2.carpoolingapplication.services.declaration.IRideRequestService;
-import be.kdg.ip2.carpoolingapplication.services.declaration.IRideService;
 import be.kdg.ip2.carpoolingapplication.services.exceptions.RideServiceException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -18,6 +17,7 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class RideRequestController {
     private static final Logger logger = LogManager.getLogger(RideRequestController.class);
+    private static final String RIDEREQUEST_URL = "/api/public/riderequests";
 
     private IRideRequestService rideRequestService;
 
@@ -27,16 +27,25 @@ public class RideRequestController {
     }
 
 
-    @GetMapping("/api/public/riderequests/user/rides/{username}")
+    /**
+     * get all riderequests for rides where user is creator
+     * @param username
+     * @return
+     */
+    @GetMapping(RIDEREQUEST_URL + "/user/rides/{username}")
     public List<RideRequest> getRideRequestsForMyRides(@PathVariable String username) {
-            return rideRequestService.getRideRequestsForRidesOfUser(username);
+        return rideRequestService.getRideRequestsForRidesOfUser(username);
     }
 
-    @GetMapping("/api/public/riderequests/user/{username}")
+    /**
+     * get a users own riderequests
+     * @param username
+     * @return
+     */
+    @GetMapping(RIDEREQUEST_URL + "/user/{username}")
     public List<RideRequest> getUserRideRequests(@PathVariable String username) {
-            return rideRequestService.getUserRideRequests(username);
+        return rideRequestService.getUserRideRequests(username);
     }
-
 
     /**
      * create a rideRequest to join a ride
@@ -45,7 +54,7 @@ public class RideRequestController {
      * @param rideRequest
      * @return
      */
-    @PostMapping("/api/public/rides/{ride_id}/user/{username}")
+    @PostMapping(RIDEREQUEST_URL + "/ride/{ride_id}/user/{username}")
     public ResponseEntity createRideRequest(@PathVariable Long ride_id, @PathVariable String username, @RequestBody RideRequest rideRequest) {
         try {
             RideRequest createdRideRequest = rideRequestService.createRideRequest(ride_id, username, rideRequest);
