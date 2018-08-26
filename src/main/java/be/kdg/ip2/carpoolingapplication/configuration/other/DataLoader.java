@@ -60,13 +60,12 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         // testride with 3 seats
         Ride ride1 = null;
         try {
-            ride1 = this.rideService.saveRide(new Ride(LocalDateTime.of(2019, 1, 1, 7, 30), LocalDateTime.of(2019, 1, 1, 17, 30), savedUser.getCars().get(0)));
+            ride1 = this.rideService.saveRide(new Ride(LocalDateTime.of(2019, 1, 1, 7, 30), savedUser.getCars().get(0)));
         } catch (RideServiceException e) {
             System.out.println("@DataLoader: if this goes wrong, i dunno anymore xD");
         }
 
         // passagepoints
-        ride1.setRideType(RideType.Single);
         List<RideLocation> locations = new ArrayList<RideLocation>();
         locations.add(new RideLocation(51.260197, 4.402771, ride1));//antwerpen
         locations.add(new RideLocation(51.02574, 4.47762, ride1));//mechelen
