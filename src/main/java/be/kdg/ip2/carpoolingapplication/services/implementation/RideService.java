@@ -99,6 +99,7 @@ public class RideService implements IRideService {
             if (r.getDepartureTimeReturnTrip() != null) {
                 Ride rr = new Ride();
                 rr.setDepartureTimeOutwardJourney(r.getDepartureTimeReturnTrip());
+                rr.setDepartureTimeReturnTrip(r.getDepartureTimeOutwardJourney());
                 rr.setRideType(RideType.BackAndForth);
                 rr.setChosenCar(r.getChosenCar());
                 Ride returnRide = saveRide(rr);
@@ -143,6 +144,7 @@ public class RideService implements IRideService {
         for (UserRideInfo uri : userRideInfos) {
             rides.add(uri.getRide());
         }
+        rides.sort(Comparator.comparing(ride -> ride.getDepartureTimeOutwardJourney()));
         return rides;
     }
 
