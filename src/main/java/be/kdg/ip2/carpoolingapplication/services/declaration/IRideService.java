@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IRideService {
 
-    List<Ride> getAllRides();
+    List<Ride> getDepartingRides();
 
     Ride createRide(String username, Ride ride) throws RideServiceException;
 

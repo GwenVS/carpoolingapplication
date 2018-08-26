@@ -46,7 +46,7 @@ public class RideController {
     }
 
     /**
-     * find all ride for 1 user with given username
+     * find all rides for 1 user with given username
      *
      * @param username
      * @return List<Ride>
@@ -77,18 +77,17 @@ public class RideController {
 
 
     /***
-     * fetches all rides
+     * fetches first 10 rides
      * @return List<Ride>
      */
     @GetMapping("/api/public/rides")
-    public List<Ride> getAllRides() {
-        logger.info("@RidesController: searching all rides.");
-        return rideService.getAllRides();
+    public List<Ride> getRides() {
+        logger.info("@RidesController: searching departing rides.");
+        return rideService.getDepartingRides();
     }
 
     /**
-     * creates new ride
-     *
+     * creates a new ride
      * @param username
      * @param ride
      * @return Ride
@@ -109,6 +108,13 @@ public class RideController {
         }
     }
 
+    /**
+     * create a rideRequest to join a ride
+     * @param ride_id
+     * @param username
+     * @param rideRequest
+     * @return
+     */
     @PostMapping("/api/public/rides/{ride_id}/user/{username}")
     public ResponseEntity createRideRequest(@PathVariable Long ride_id, @PathVariable String username, @RequestBody RideRequest rideRequest) {
         try {

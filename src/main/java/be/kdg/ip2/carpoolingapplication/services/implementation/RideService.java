@@ -2,7 +2,6 @@ package be.kdg.ip2.carpoolingapplication.services.implementation;
 
 import be.kdg.ip2.carpoolingapplication.domain.*;
 import be.kdg.ip2.carpoolingapplication.domain.enums.RideType;
-import be.kdg.ip2.carpoolingapplication.domain.locations.Location;
 import be.kdg.ip2.carpoolingapplication.domain.locations.RideLocation;
 import be.kdg.ip2.carpoolingapplication.domain.user.User;
 import be.kdg.ip2.carpoolingapplication.domain.user.UserRideInfo;
@@ -17,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,26 +30,33 @@ public class RideService implements IRideService {
     private ICarService carService;
 
     private RideRepository rideRepository;
-    private LocationRepository locationRepository;
     private UserRideInfoRepository userRideInfoRepository;
     private RideRequestRepository rideRequestRepository;
 
 
     @Autowired
-    public RideService(IUserService userService, ICarService carService, RideRepository rideRepository, LocationRepository locationRepository, UserRideInfoRepository userRideInfoRepository, RideRequestRepository rideRequestRepository) {
+    public RideService(IUserService userService, ICarService carService, RideRepository rideRepository, UserRideInfoRepository userRideInfoRepository, RideRequestRepository rideRequestRepository) {
         this.userService = userService;
         this.rideRepository = rideRepository;
-        this.locationRepository = locationRepository;
         this.userRideInfoRepository = userRideInfoRepository;
         this.rideRequestRepository = rideRequestRepository;
         this.carService = carService;
     }
 
     @Override
-    public List<Ride> getAllRides() {
+    public List<Ride> getDepartingRides() {
         List<Ride> rides = rideRepository.findAll();
-        if (rides == null) {
-            return new ArrayList<>();
+        List<Ride> ridesToRemove = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+        for (Ride ride : rides) {
+            if (ride.getDepartureTimeOutwardJourney().isBefore(now)) {
+                ridesToRemove.add(ride);
+            }
+        }
+        rides.removeAll(ridesToRemove);
+        rides.sort(Comparator.comparing(ride -> ride.getDepartureTimeOutwardJourney()));
+        if (rides.size() > 10) {
+            return rides.subList(0, 9);
         } else {
             return rides;
         }
@@ -83,7 +91,7 @@ public class RideService implements IRideService {
             UserRideInfo uri = creatorUserRideInfo(creator, r);
             r.addUserRideInfo(uri);
             creator.addUserRideInfo(uri);
-            for (int i=0 ;i<r.getLocations().size() ;i++) {
+            for (int i = 0; i < r.getLocations().size(); i++) {
                 RideLocation rl = r.getLocations().get(i);
                 rl.setRide(r);
             }
@@ -98,7 +106,7 @@ public class RideService implements IRideService {
                 returnRide.addUserRideInfo(uri2);
                 creator.addUserRideInfo(uri2);
                 List<RideLocation> rideLocs = new ArrayList<>();
-                for (int i=r.getLocations().size()-1 ;i>=0;i--) {
+                for (int i = r.getLocations().size() - 1; i >= 0; i--) {
                     RideLocation originalRL = r.getLocations().get(i);
                     RideLocation newRl = new RideLocation();
                     newRl.setLatitude(originalRL.getLatitude());
@@ -187,14 +195,6 @@ public class RideService implements IRideService {
             throw new RideServiceException("RideRequest not saved: " + e.getMessage());
         }
 
-    }
-
-    private Location saveLocation(Location location) throws RideServiceException {
-        try {
-            return locationRepository.save(location);
-        } catch (Exception e) {
-            throw new RideServiceException("Location not saved: " + e.getMessage());
-        }
     }
 
     //save UserRideInfo for creator that marks him as driver
