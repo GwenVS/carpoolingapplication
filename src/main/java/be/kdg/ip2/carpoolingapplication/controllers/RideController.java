@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class RideController {
     private static final Logger logger = LogManager.getLogger(RideController.class);
-    private static final String RIDE_URL = "/api/public/rides";
+    private static final String RIDE_URL = "/api/private/rides";
     private static final String PUBLIC_RIDE_URL = "/api/public/rides";
 
     private IRideService rideService;
@@ -32,7 +33,7 @@ public class RideController {
      * @param rideId
      * @return Ride
      */
-    @GetMapping(RIDE_URL + "/{ride_id}")
+    @GetMapping(PUBLIC_RIDE_URL + "/{ride_id}")
     public ResponseEntity get(@PathVariable("ride_id") long rideId) {
         try {
             Ride ride = rideService.getRideById(rideId);
@@ -51,6 +52,7 @@ public class RideController {
      * @return List<Ride>
      */
     @GetMapping(RIDE_URL + "/user/{username}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity getRidesByUser(@PathVariable String username) {
         List<Ride> rides = rideService.getRidesByUsername(username);
         logger.info("@RidesController: fetched Rides for user " + username);
@@ -63,7 +65,7 @@ public class RideController {
      * @param maxDepartureTime
      * @return
      */
-    @GetMapping(RIDE_URL + "/time/{min_departure_time}/{max_departure_time}")
+    @GetMapping(PUBLIC_RIDE_URL + "/time/{min_departure_time}/{max_departure_time}")
     public List<Ride> getRidesByDepartureTime(@PathVariable("min_departure_time") LocalDateTime minDepartureTime, @PathVariable("max_departure_time") LocalDateTime maxDepartureTime) {
         logger.info("searching rides departing from " + minDepartureTime + " till " + maxDepartureTime + ".");
         return rideService.getRidesByDepartureTime(minDepartureTime, maxDepartureTime);
@@ -74,7 +76,7 @@ public class RideController {
      * fetches first 10 rides
      * @return List<Ride>
      */
-    @GetMapping(RIDE_URL)
+    @GetMapping(PUBLIC_RIDE_URL)
     public List<Ride> getRides() {
         logger.info("@RidesController: searching departing rides.");
         return rideService.getDepartingRides();
@@ -87,7 +89,7 @@ public class RideController {
      * @return Ride
      */
     @PostMapping(RIDE_URL + "/ride/{username}")
-    //@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity createRide(@PathVariable String username, @RequestBody Ride ride) {
         try {
             Ride createdRide = rideService.createRide(username, ride);
@@ -107,6 +109,7 @@ public class RideController {
      * @return
      */
     @DeleteMapping(RIDE_URL + "/{ride_id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity deleteRide(@PathVariable Long ride_id) {
         try {
             rideService.deleteRide(ride_id);

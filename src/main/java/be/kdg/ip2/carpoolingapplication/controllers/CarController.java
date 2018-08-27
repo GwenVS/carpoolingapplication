@@ -17,7 +17,7 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class CarController {
     private static final Logger logger = LogManager.getLogger(CarController.class);
-    private static final String CAR_URL = "/api/public/cars";
+    private static final String CAR_URL = "/api/private/cars";
 
     private ICarService carService;
 

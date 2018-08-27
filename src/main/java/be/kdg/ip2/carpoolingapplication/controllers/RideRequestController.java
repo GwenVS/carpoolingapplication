@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "https://carpoolingapplicationfe.herokuapp.com")
 public class RideRequestController {
     private static final Logger logger = LogManager.getLogger(RideRequestController.class);
-    private static final String RIDEREQUEST_URL = "/api/public/riderequests";
+    private static final String RIDEREQUEST_URL = "/api/private/riderequests";
 
     private IRideRequestService rideRequestService;
 
@@ -33,6 +34,7 @@ public class RideRequestController {
      * @return
      */
     @GetMapping(RIDEREQUEST_URL + "/user/rides/{username}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public List<RideRequest> getRideRequestsForMyRides(@PathVariable String username) {
         return rideRequestService.getRideRequestsForRidesOfUser(username);
     }
@@ -43,6 +45,7 @@ public class RideRequestController {
      * @return
      */
     @GetMapping(RIDEREQUEST_URL + "/user/{username}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public List<RideRequest> getUserRideRequests(@PathVariable String username) {
         return rideRequestService.getUserRideRequests(username);
     }
@@ -55,6 +58,7 @@ public class RideRequestController {
      * @return
      */
     @PostMapping(RIDEREQUEST_URL + "/ride/{ride_id}/user/{username}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity createRideRequest(@PathVariable Long ride_id, @PathVariable String username, @RequestBody RideRequest rideRequest) {
         try {
             RideRequest createdRideRequest = rideRequestService.createRideRequest(ride_id, username, rideRequest);
